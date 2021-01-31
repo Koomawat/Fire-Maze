@@ -7,6 +7,7 @@ def mazeGen():
 
     # Hard coded dim x dim matrix to represent the Maze
     maze = np.zeros((10,10))
+    maze_length = len(maze)
 
     # Variable p represents the probability of a cell in the Maze being occupied
     p = 0.3
@@ -44,4 +45,6 @@ def mazeGen():
 
     # Using matplotlib to visualize the Maze in a grid view
     plt.imshow(maze)
-    plt.show()
+    # plt.show()
+
+    return maze, maze_length
