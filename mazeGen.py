@@ -15,7 +15,11 @@ def mazeGen():
     # Here we use numpy to traverse the Maze we created
     # For each cell we do a random from 0 to 1 and if the value is p or less the cell will have an occupied state
     for x in np.nditer(maze, op_flags=['readwrite']):
-        if random.random() <= p:
+        rand = random.random()
+        while (rand == 0):
+            rand = random.random()
+            
+        if rand <= p:
             x[...] = 1
 
     # The first cell and the very last cell cannot be occupied as they are the start and end points of the Maze
