@@ -15,6 +15,5 @@ def main():
     print(f'Is there a path from {start} to {goal}?: {reachable}')
 
 
-
 if __name__ == "__main__":
     main()
