@@ -4,14 +4,13 @@ from collections import deque
 def dfs(maze, start, goal, mlen):
 
     visited = np.zeros((mlen, mlen))
-    visited[0, 0], visited[mlen-1, mlen-1] = 1, 1
     stack = deque()
     stack.append(start)
 
     while stack:
 
         x, y = stack.pop()
-
+        
         if x >= mlen or y >= mlen or x < 0 or y < 0 or visited[x, y] == 1:
             continue;
 

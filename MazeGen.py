@@ -5,9 +5,10 @@ from matplotlib import colors
 
 def mazeGen():
 
+    maze_length = int(input("Enter the length of a square maze: "))
     # Hard coded dim x dim matrix to represent the Maze
-    maze = np.zeros((10,10))
-    maze_length = len(maze)
+    maze = np.zeros((maze_length, maze_length))
+    
 
     # Variable p represents the probability of a cell in the Maze being occupied
     p = 0.3
