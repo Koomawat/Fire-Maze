@@ -45,6 +45,6 @@ def mazeGen():
 
     # Using matplotlib to visualize the Maze in a grid view
     plt.imshow(maze)
-    # plt.show()
+    plt.show()
 
     return maze, maze_length
