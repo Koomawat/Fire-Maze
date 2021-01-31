@@ -16,9 +16,12 @@ def mazeGen():
     # For each cell we do a random from 0 to 1 and if the value is p or less the cell will have an occupied state
     for x in np.nditer(maze, op_flags=['readwrite']):
         rand = random.random()
+
+        # random.random() generates a number in [0, 1)
+        # random generate a number until it excludes 0 too
         while (rand == 0):
             rand = random.random()
-            
+
         if rand <= p:
             x[...] = 1
 
