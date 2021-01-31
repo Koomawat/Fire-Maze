@@ -1,12 +1,10 @@
-from MazeGen import *
-import MazeGen
+from mazeGen import *
+import mazeGen
 from dfs import *
 
 def main():
 
-    main_maze, mlen = MazeGen.mazeGen()
-    # main_maze = MazeGen.maze
-    # mlen = MazeGen.maze_length
+    main_maze, mlen = mazeGen.mazeGen()
 
     start = (0,0)
     goal = (mlen-1, mlen-1)
