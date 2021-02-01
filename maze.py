@@ -22,13 +22,7 @@ def main():
     # A* returning the optimal path from S to G
     aStarPath = aStar(main_maze, start, goal)
     print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
-    
-    main_maze = colorPath(main_maze, aStarPath)
-
-
-
-
-
+    colorPath(aStarPath, main_maze)
 
 if __name__ == "__main__":
     main()

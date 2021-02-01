@@ -163,7 +163,7 @@ def setNeighbors(tree,maze):
 def colorPath(path, maze): 
     
     # color in start position
-    maze[0, 0] = 3
+    maze[0, 0] = 4
 
     mlen = len(maze)
     x, y = 0, 0
@@ -180,6 +180,8 @@ def colorPath(path, maze):
             y -= 1
         elif letter == "D":
             y += 1
-        maze[x, y] = 3
+        maze[x, y] = 4
+
+    plt.imshow(maze)
+    plt.show()
     
-    return maze
