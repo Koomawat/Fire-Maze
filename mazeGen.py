@@ -55,3 +55,107 @@ def mazeGen():
     plt.show()
 
     return maze, maze_length
+
+def arrayToTree(maze):
+    
+    # Converting a 2D numpy matrix into a "tree" like structure in using dictionaries
+    dim = len(maze)
+
+    # Setting the key of the dictionary to be the element location in the matrix
+    tree = {(x, y): 
+    # Values only set for elements where there is a free cell 
+    # Occupied cells (represented by 1) and fire cells (represented by 2) are ignored
+    []  for y in range(dim) 
+            for x in range(dim) 
+                if not (maze[x,y] == 1 or maze[x,y] == 2)}
+
+    # Calling the neighbor function to set 
+    return setNeighbors(tree,maze)
+
+def setNeighbors(tree,maze):
+
+    dim = len(maze)
+
+    # Traversing for each key (or in other words 2d array element) in the tree dictionary and checking valid neighbors
+    for x, y in tree.keys():
+        
+        # Neighbors can only be Down(D) or Right(R) if x,y is top left corner
+        if(x == 0 and y == 0):
+            if(maze[x+1,y] == 0):
+                tree[(x, y)].append(("D", (x + 1, y)))
+            if(maze[x,y+1] == 0):
+                tree[(x, y)].append(("R", (x, y + 1)))
+
+        # Neighbors can only be Up(U) or Right(R) if x,y is bottom left corner
+        elif(x == (dim - 1) and y == 0):
+            if(maze[x-1,y] == 0):
+                tree[(x, y)].append(("U", (x - 1, y)))
+            if(maze[x,y+1] == 0):
+                tree[(x, y)].append(("R", (x, y + 1)))
+
+        # Neighbors can only be Down(U) or Left(L) if x,y is top right corner
+        elif(x == 0 and y == (dim - 1)):
+            if(maze[x+1,y] == 0):
+                tree[(x, y)].append(("D", (x + 1, y)))
+            if(maze[x,y-1] == 0):
+                tree[(x, y)].append(("L", (x, y - 1)))
+
+        # Neighbors can only be Up(U) or Left(L) if x,y is bottom right corner
+        elif(x == (dim - 1) and y == (dim - 1)):
+            if(maze[x-1,y] == 0):
+                tree[(x, y)].append(("U", (x - 1, y)))
+            if(maze[x,y-1] == 0):
+                tree[(x, y)].append(("L", (x, y - 1)))
+
+        # Neighbors can only be Down(D), Right(R) or Left(L) on the upper edge
+        elif(x == 0 and y != (0) and (y < (dim - 1))):
+            if(maze[x+1,y] == 0):
+                tree[(x, y)].append(("D", (x + 1, y)))
+            if(maze[x,y+1] == 0):
+                tree[(x, y)].append(("R", (x, y + 1)))
+            if(maze[x,y-1] == 0):
+                tree[(x, y)].append(("L", (x, y - 1)))
+
+        # Neighbors can only be Up(U), Right(R) or Left(L) on the bottom edge
+        elif(x == (dim - 1) and y != (0) and (y < (dim - 1))):
+            if(maze[x-1,y] == 0):
+                tree[(x, y)].append(("U", (x + 1, y)))
+            if(maze[x,y+1] == 0):
+                tree[(x, y)].append(("R", (x, y + 1)))
+            if(maze[x,y-1] == 0):
+                tree[(x, y)].append(("L", (x, y - 1)))
+
+        # Neighbors can only be Down(D), Right(R) or Up(U) on the left edge 
+        elif(y == 0 and x != (0) and (x < (dim - 1))):
+            if(maze[x+1,y] == 0):
+                tree[(x, y)].append(("D", (x + 1, y)))
+            if(maze[x,y+1] == 0):
+                tree[(x, y)].append(("R", (x, y + 1)))
+            if(maze[x-1,y] == 0):
+                tree[(x, y)].append(("U", (x, y - 1)))
+
+        # Neighbors can only be Down(D), Left(L) or Up(U) on the right edge 
+        elif(y == (dim - 1) and x != (0) and (x < (dim - 1))):
+            if(maze[x+1,y] == 0):
+                tree[(x, y)].append(("D", (x + 1, y)))
+            if(maze[x,y-1] == 0):
+                tree[(x, y)].append(("L", (x, y - 1)))
+            if(maze[x-1,y] == 0):
+                tree[(x, y)].append(("U", (x - 1, y)))
+
+        # Neighbors can be Down(D), Right(R), Left(L), or Up(U) on not edges
+        elif(x != (0) and (x < (dim - 1)) and y != (0) and (y < (dim - 1))):
+            if(maze[x+1,y] == 0):
+                tree[(x, y)].append(("D", (x + 1, y)))
+            if(maze[x,y+1] == 0):
+                tree[(x, y)].append(("R", (x, y + 1)))
+            if(maze[x,y-1] == 0):
+                tree[(x, y)].append(("L", (x, y - 1)))
+            if(maze[x-1,y] == 0):
+                tree[(x, y)].append(("U", (x - 1, y)))
+
+    # Test to print dictionary
+    #for k,v in tree.items():
+        #print(k, ' : ', v)
+
+    return tree
