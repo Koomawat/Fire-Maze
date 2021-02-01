@@ -119,7 +119,7 @@ def setNeighbors(tree,maze):
         # Neighbors can only be Up(U), Right(R) or Left(L) on the bottom edge
         elif(x == (dim - 1) and y != (0) and (y < (dim - 1))):
             if(maze[x-1,y] == 0):
-                tree[(x, y)].append(("U", (x + 1, y)))
+                tree[(x, y)].append(("U", (x - 1, y)))
             if(maze[x,y+1] == 0):
                 tree[(x, y)].append(("R", (x, y + 1)))
             if(maze[x,y-1] == 0):
@@ -132,7 +132,7 @@ def setNeighbors(tree,maze):
             if(maze[x,y+1] == 0):
                 tree[(x, y)].append(("R", (x, y + 1)))
             if(maze[x-1,y] == 0):
-                tree[(x, y)].append(("U", (x, y - 1)))
+                tree[(x, y)].append(("U", (x-1, y)))
 
         # Neighbors can only be Down(D), Left(L) or Up(U) on the right edge 
         elif(y == (dim - 1) and x != (0) and (x < (dim - 1))):
