@@ -155,15 +155,15 @@ def setNeighbors(tree,maze):
                 tree[(x, y)].append(("U", (x - 1, y)))
 
     # Test to print dictionary
-    #for k,v in tree.items():
-        #print(k, ' : ', v)
+    # for k,v in tree.items():
+    #     print(k, ' : ', v)
 
     return tree
 
 def colorPath(path, maze): 
     
     # color in start position
-    maze[0, 0] = 4
+    maze[0, 0] = 3
 
     mlen = len(maze)
     x, y = 0, 0
@@ -180,7 +180,8 @@ def colorPath(path, maze):
             y -= 1
         elif letter == "D":
             y += 1
-        maze[x, y] = 4
+        # [row, col]
+        maze[y, x] = 3
 
     plt.imshow(maze)
     plt.show()

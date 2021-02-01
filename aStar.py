@@ -3,13 +3,13 @@ from heapq import heappush
 from matplotlib import pyplot as plt
 from matplotlib import colors
 from mazeGen import *
-import mazeGen
+import math
 
 
 
 def euclideanHeuristic(child, goal):
     # Using the euclidean metric but not having the square root as it will cost too much
-    return ((child[0] - goal[0])**2) + ((child[1] - goal[1])**2)
+    return math.sqrt(abs(((child[0] - goal[0])**2) + ((child[1] - goal[1])**2)))
 
 def aStar(maze, start, goal):
     
