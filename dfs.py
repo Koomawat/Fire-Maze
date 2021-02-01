@@ -13,9 +13,9 @@ def dfs(maze, start, goal, mlen):
 
         # need to work with graph
 
-        current, neighbors = stack.pop()
+        x, y = stack.pop()
         
-        str += current
+        # str += current
 
         if x >= mlen or y >= mlen or x < 0 or y < 0 or visited[x, y] == 1:
             continue;

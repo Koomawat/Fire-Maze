@@ -159,3 +159,27 @@ def setNeighbors(tree,maze):
         #print(k, ' : ', v)
 
     return tree
+
+def colorPath(path, maze): 
+    
+    # color in start position
+    maze[0, 0] = 3
+
+    mlen = len(maze)
+    x, y = 0, 0
+
+    for letter in path:
+        if x >= mlen or y >= mlen or x < 0 or y < 0:
+            break
+
+        if letter == "R":
+            x += 1
+        elif letter == "L":
+            x -= 1
+        elif letter == "U":
+            y -= 1
+        elif letter == "D":
+            y += 1
+        maze[x, y] = 3
+    
+    return maze
