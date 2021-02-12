@@ -3,10 +3,16 @@ import mazeGen
 from aStar import * 
 from dfs import *
 from bfs import *
+from fire import *
+from matplotlib import pyplot as plt
+from matplotlib import colors
 
 def main():
 
     main_maze, mlen = mazeGen.mazeGen()
+    # Using matplotlib to visualize the Maze in a grid view
+    plt.imshow(main_maze)
+    plt.show()
 
     start = (0,0)
     goal = (mlen-1, mlen-1)
@@ -22,7 +28,15 @@ def main():
     # A* returning the optimal path from S to G
     aStarPath = aStar(main_maze, start, goal)
     print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
-    colorPath(aStarPath, main_maze)
+    colored_maze = colorPath(aStarPath, main_maze)
+    plt.imshow(colored_maze)
+    plt.show()
+
+    spread_maze = None
+    for x in range(20):
+        spread_maze = spread_fire(main_maze)
+    plt.imshow(spread_maze)
+    plt.show()
 
 if __name__ == "__main__":
     main()

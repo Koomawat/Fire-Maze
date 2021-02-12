@@ -50,10 +50,6 @@ def mazeGen():
     # Setting the random tuple as the initial fire spot 
     maze[tuple1,tuple2] = 2
 
-    # Using matplotlib to visualize the Maze in a grid view
-    plt.imshow(maze)
-    plt.show()
-
     return maze, maze_length
 
 def arrayToTree(maze):
@@ -183,6 +179,5 @@ def colorPath(path, maze):
         # [row, col]
         maze[y, x] = 3
 
-    plt.imshow(maze)
-    plt.show()
+    return maze
     
