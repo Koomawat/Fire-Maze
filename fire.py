@@ -32,34 +32,27 @@ def spread_fire(maze):
 
 def count_neighbor(maze, x, y):
     count = 0
+    mlen = len(maze)
 
-    try: 
-        #print("reach1")
-        if maze[x+1, y] == 2:
-            count += 1
-    except:
+    if x + 1 >= mlen:
         pass
+    elif maze[x+1, y] == 2:
+        count += 1
 
-    try:
-        #print("reach2")
-        if maze[x-1, y] == 2:
-            count += 1
-    except:
+    if x - 1 < 0:
         pass
+    elif maze[x-1, y] == 2:
+        count += 1
 
-    try:
-        #print("reach3")
-        if maze[x, y+1] == 2:
-            count += 1
-    except:
+    if y + 1 >= mlen:
         pass
+    if maze[x, y+1] == 2:
+        count += 1
 
-    try:
-        #print("reach4")
-        if maze[x, y-1] == 2:
-            count += 1
-    except:
+    if u - 1 < 0:
         pass
+    if maze[x, y-1] == 2:
+        count += 1
 
     return count
     
