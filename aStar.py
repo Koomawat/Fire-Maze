@@ -1,7 +1,5 @@
 from heapq import heappop
 from heapq import heappush
-from matplotlib import pyplot as plt
-from matplotlib import colors
 from mazeGen import *
 import math
 
