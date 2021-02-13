@@ -22,8 +22,8 @@ def main():
     # print(f'Is there a path from {start} to {goal} using DFS?: {reachable}')
 
     # bfs returns the optimal path from the start to the goal
-    # optimalpath = bfs(main_maze, start, goal, mlen)
-    # print(f'Was a shortest path found from {start} to {goal}?: {optimalpath}')
+    optimalpath = bfs(main_maze, start, goal, mlen)
+    print(f'Was a shortest path found from {start} to {goal}?: {optimalpath}')
 
     # A* returning the optimal path from S to G
     aStarPath = aStar(main_maze, start, goal)

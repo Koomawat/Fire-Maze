@@ -10,7 +10,7 @@ import mazeGen
 def bfs(maze, start, goal, mlen):
 
     # Initialize the queue and set the start in
-    queue = deque([start])
+    queue = deque([start, 0, ""])
 
     # create a visited list (interchangable with set) 
     visited = np.zeros((mlen, mlen))
@@ -20,11 +20,11 @@ def bfs(maze, start, goal, mlen):
 
     while queue:
 
-        x, y = queue.popleft()
-
+        (x, y), current, path = queue.popleft()
+        node = (x, y)
         # if the goal is found, return true for now -> need to figure out what to do with display
         if(x, y) == goal:
-            return True
+            return path
 
         # keep getting an out of bounds axis error
         if x >= mlen or y >= mlen or x < 0 or y < 0:
@@ -37,12 +37,12 @@ def bfs(maze, start, goal, mlen):
         # if the node is empty and hasnt been visited yet, add its neighbours to the queue with right/down prio
         elif maze[x, y] == 0 and visited[x, y] == 0:
             visited[x, y] = 1 # mark it as visited (may need to change)
-            queue.append((x+1, y)) # add right
-            queue.append((x, y+1)) # add down
-            queue.append((x, y-1)) # add up
-            queue.append((x-1, y)) # add left
+            for movement, neighborElements in tree[node]:
+                newPath = path + movement
+            queue.append((x+1, y), newPath) # add right
+            queue.append((x, y+1), newPath) # add down
+            queue.append((x, y-1), newPath) # add up
+            queue.append((x-1, y), newPath) # add left
 
-   # plt.imshow(visited)
-   # plt.show()
     return False # filler for now
 
