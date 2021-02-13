@@ -4,8 +4,6 @@ import math
 
 def spread_fire(maze):
 
-    tupleTrack = []
-
     c_maze = copy.deepcopy(maze)
     result_maze = copy.deepcopy(maze)
 
@@ -17,17 +15,9 @@ def spread_fire(maze):
                 q = random.uniform(0, 1)
                 prob = 1 - (math.pow((1 - q),k))
 
-                #initialFire = True
-
-
-                #if ((x,y) in tupleTrack):
-                #    initialFire = False
-
                 rand = random.uniform(0, 1)
-
-                if ((rand <= prob)): #and (initialFire == True)):
+                if rand <= prob: 
                     result_maze[x, y] = 2
-                    tupleTrack.append((x,y))
                     
     return result_maze
 

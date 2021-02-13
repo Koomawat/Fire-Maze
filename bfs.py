@@ -2,10 +2,13 @@ import numpy as np
 from collections import deque
 from mazeGen import *
 import mazeGen
+import copy
 
 # take the maze, start, goal, and length of one side as parameters
 # marking visited nodes as 1 but could also just use a visited set and add the nodes as it traverses
-def bfs(maze, start, goal, mlen):
+def bfs(main_maze, start, goal, mlen):
+
+    maze = copy.deepcopy(main_maze)
 
     # Initialize the queue and set the start in
     queue = deque([[start, ""]])

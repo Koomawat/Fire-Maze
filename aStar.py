@@ -1,7 +1,6 @@
 from heapq import heappop
 from heapq import heappush
-from matplotlib import pyplot as plt
-from matplotlib import colors
+import copy
 from mazeGen import *
 import math
 
@@ -11,8 +10,10 @@ def euclideanHeuristic(child, goal):
     # Using the euclidean metric but not having the square root as it will cost too much
     return math.sqrt(abs(((child[0] - goal[0])**2) + ((child[1] - goal[1])**2)))
 
-def aStar(maze, start, goal):
+def aStar(main_maze, start, goal):
     
+    maze = copy.deepcopy(main_maze)
+
     # Initializing priority queue list/heap
     priorityQueue = []
     
