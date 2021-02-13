@@ -49,7 +49,7 @@ def count_neighbor(maze, x, y):
     if maze[x, y+1] == 2:
         count += 1
 
-    if u - 1 < 0:
+    if y - 1 < 0:
         pass
     if maze[x, y-1] == 2:
         count += 1
