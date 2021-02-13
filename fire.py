@@ -16,15 +16,15 @@ def spread_fire(maze):
                 q = random.uniform(0, 1)
                 prob = 1 - (math.pow((1 - q),k))
 
-                initialFire = True
+                #initialFire = True
 
 
-                if ((x,y) in tupleTrack):
-                    initialFire = False
+                #if ((x,y) in tupleTrack):
+                #    initialFire = False
 
                 rand = random.uniform(0, 1)
 
-                if ((rand <= prob) and (initialFire == True)):
+                if ((rand <= prob)): #and (initialFire == True)):
                     c_maze[x, y] = 2
                     tupleTrack.append((x,y))
                     
@@ -32,34 +32,27 @@ def spread_fire(maze):
 
 def count_neighbor(maze, x, y):
     count = 0
+    mlen = len(maze)
 
-    try: 
-        #print("reach1")
-        if maze[x+1, y] == 2:
-            count += 1
-    except:
+    if (x+1 >= mlen):
         pass
+    elif maze[x+1, y] == 2:
+        count += 1
 
-    try:
-        #print("reach2")
-        if maze[x-1, y] == 2:
-            count += 1
-    except:
+    if (x-1 < 0):
         pass
+    elif maze[x-1, y] == 2:
+        count += 1
 
-    try:
-        #print("reach3")
-        if maze[x, y+1] == 2:
-            count += 1
-    except:
+    if (y+1 >= mlen):
         pass
+    elif maze[x, y+1] == 2:
+        count += 1
 
-    try:
-        #print("reach4")
-        if maze[x, y-1] == 2:
-            count += 1
-    except:
+    if (y-1 < 0):
         pass
+    elif maze[x, y-1] == 2:
+        count += 1
 
     return count
     
