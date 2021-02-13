@@ -10,7 +10,7 @@ import mazeGen
 def bfs(maze, start, goal, mlen):
 
     # Initialize the queue and set the start in
-    queue = deque([[start, 0, ""]])
+    queue = deque([[start, ""]])
 
     # create a visited list (interchangable with set) 
     visited = np.zeros((mlen, mlen))
@@ -21,33 +21,41 @@ def bfs(maze, start, goal, mlen):
     while queue:
 
         tuples = (values) = queue.popleft()
-        node, currVal, path = tuples
-        print(node)
-        print(currVal)
-        print(path) # doesn't print cuz empty
+        node, path = tuples
+        #print(node)
+        #print(currVal)
+        #print(path) # doesn't print cuz empty
 
-        # node = (x, y)
-        # # if the goal is found, return true for now -> need to figure out what to do with display
-        # if(x, y) == goal:
-        #     return path
+        (x, y) = node
+         # if the goal is found, return true for now -> need to figure out what to do with display
+        if (x, y) == goal:
+            return path
 
-        # # keep getting an out of bounds axis error
-        # if x >= mlen or y >= mlen or x < 0 or y < 0:
-        #     continue
+         # keep getting an out of bounds axis error
+        if x >= mlen or y >= mlen or x < 0 or y < 0:
+            continue
 
-        # # if the node is blocked, on fire, or already visited, skip it and move on
-        # if maze[x, y] >= 1 or visited[x, y] == 1:
-        #     continue
+         # if the node is blocked, on fire, or already visited, skip it and move on
+        if maze[x, y] >= 1 or visited[x, y] == 1:
+            continue
 
-        # # if the node is empty and hasnt been visited yet, add its neighbours to the queue with right/down prio
-        # elif maze[x, y] == 0 and visited[x, y] == 0:
-        #     visited[x, y] = 1 # mark it as visited (may need to change)
-        #     for movement, neighborElements in tree[node]:
-        #         newPath = path + movement
-        #     queue.append((x+1, y), newPath) # add right
-        #     queue.append((x, y+1), newPath) # add down
-        #     queue.append((x, y-1), newPath) # add up
-        #     queue.append((x-1, y), newPath) # add left
+         # if the node is empty and hasnt been visited yet, add its neighbours to the queue with right/down prio
+        elif maze[x, y] == 0 and visited[x, y] == 0:
+            visited[x, y] = 1 # mark it as visited (may need to change)
+            for movement, neighborElements in tree[node]:
+                path = path + movement
+                node = (x+1, y)
+            #path = newPath
+                tuples = node, path
+                queue.append(tuples) # add right
+                node = (x, y+1)
+                tuples = node, path
+                queue.append(tuples) # add down
+                node = (x, y-1)
+                tuples = node, path
+                queue.append(tuples) # add up
+                node = (x-1, y)
+                tuples = node, path
+                queue.append(tuples) # add left
 
     return False # filler for now
-

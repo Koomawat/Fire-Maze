@@ -31,8 +31,8 @@ def main():
 
 
     # A* returning the optimal path from S to G
-    #aStarPath = aStar(main_maze, start, goal)
-    #print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
+    aStarPath = aStar(main_maze, start, goal)
+    print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
     #colored_maze = colorPath(aStarPath, main_maze)
     #plt.imshow(colored_maze)
     #plt.show()
