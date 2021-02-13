@@ -1,7 +1,5 @@
 import numpy as np
 from collections import deque
-from matplotlib import pyplot as plt
-from matplotlib import colors
 from mazeGen import *
 import mazeGen
 
