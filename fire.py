@@ -7,6 +7,7 @@ def spread_fire(maze):
     tupleTrack = []
 
     c_maze = copy.deepcopy(maze)
+    result_maze = copy.deepcopy(maze)
 
     for y in range(len(c_maze)):
         for x in range(len(c_maze)):
@@ -16,19 +17,19 @@ def spread_fire(maze):
                 q = random.uniform(0, 1)
                 prob = 1 - (math.pow((1 - q),k))
 
-                initialFire = True
+                #initialFire = True
 
 
-                if ((x,y) in tupleTrack):
-                    initialFire = False
+                #if ((x,y) in tupleTrack):
+                #    initialFire = False
 
                 rand = random.uniform(0, 1)
 
-                if ((rand <= prob) and (initialFire == True)):
-                    c_maze[x, y] = 2
+                if ((rand <= prob)): #and (initialFire == True)):
+                    result_maze[x, y] = 2
                     tupleTrack.append((x,y))
                     
-    return c_maze
+    return result_maze
 
 def count_neighbor(maze, x, y):
     count = 0
@@ -46,12 +47,12 @@ def count_neighbor(maze, x, y):
 
     if y + 1 >= mlen:
         pass
-    if maze[x, y+1] == 2:
+    elif maze[x, y+1] == 2:
         count += 1
 
     if y - 1 < 0:
         pass
-    if maze[x, y-1] == 2:
+    elif maze[x, y-1] == 2:
         count += 1
 
     return count
