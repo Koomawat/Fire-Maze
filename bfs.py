@@ -10,10 +10,10 @@ def bfs(main_maze, start, goal, mlen):
 
     maze = copy.deepcopy(main_maze)
 
-    # Initialize the queue and set the start in
+    # Initialize the queue and set the start and empty path string
     queue = deque([[start, ""]])
 
-    # create a visited list (interchangable with set) 
+    # create a visited set (interchangable with list) 
     visited = set()
 
     # Convert the 2D array into a dictionary
@@ -28,24 +28,23 @@ def bfs(main_maze, start, goal, mlen):
         #print(path) # doesn't print cuz empty
 
         (x, y) = node
-         # if the goal is found, return true for now -> need to figure out what to do with display
+        # if the goal is found, return true for now -> need to figure out what to do with display
         if node == goal:
             return path
 
-         # keep getting an out of bounds axis error
+        # keep getting an out of bounds axis error
         if x >= mlen or y >= mlen or x < 0 or y < 0:
             continue
 
-         # if the node is blocked, on fire, or already visited, skip it and move on
-        #if maze[x, y] >= 1 or visited[x, y] == 1:
+         # if the node is blocked or on fire, skip it and move on
         if maze[x, y] >= 1:
             continue
 
-         # if the node is empty and hasnt been visited yet, add its neighbours to the queue with right/down prio
+         # if the node is empty and hasnt been visited yet, add its neighbours to the queue
         elif maze[x, y] == 0 and node not in visited:
-            visited.add(node) # mark it as visited (may need to change)
+            visited.add(node) # mark it as visited by adding to the set
             for movement, neighborElements in tree[node]:
-                #path = path + movement
+                # path = path + movement
                 queue.append((neighborElements, path+movement))
             #node = (x+1, y)
             #path = newPath
