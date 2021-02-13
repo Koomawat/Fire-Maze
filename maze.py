@@ -33,15 +33,15 @@ def main():
     # A* returning the optimal path from S to G
     aStarPath = aStar(main_maze, start, goal)
     print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
-    colored_maze = colorPath(aStarPath, main_maze)
-    plt.imshow(colored_maze)
-    plt.show()
+    #colored_maze = colorPath(aStarPath, main_maze)
+    #plt.imshow(colored_maze)
+    #plt.show()
 
-    spread_maze = main_maze
-    for x in range(20):
-       spread_maze = spread_fire(main_maze)
-    plt.imshow(spread_maze)
-    plt.show()
+    #spread_maze = main_maze
+    #for x in range(20):
+    #   spread_maze = spread_fire(main_maze)
+    #plt.imshow(spread_maze)
+    #plt.show()
 
 if __name__ == "__main__":
     main()

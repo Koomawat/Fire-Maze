@@ -56,4 +56,4 @@ def bfs(maze, start, goal, mlen):
                 tuples = node, path
                 queue.append(tuples) # add left
 
-    return False # filler for now
+    return "No such path from S to G exists" # filler for now
