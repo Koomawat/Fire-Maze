@@ -25,18 +25,23 @@ def main():
     optimalpath = bfs(main_maze, start, goal, mlen)
     print(f'Was a shortest path found from {start} to {goal}?: {optimalpath}')
 
-    # A* returning the optimal path from S to G
-    aStarPath = aStar(main_maze, start, goal)
-    print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
-    colored_maze = colorPath(aStarPath, main_maze)
+    colored_maze = colorPath(optimalpath, main_maze)
     plt.imshow(colored_maze)
     plt.show()
 
-    spread_maze = None
-    for x in range(20):
-        spread_maze = spread_fire(main_maze)
-    plt.imshow(spread_maze)
-    plt.show()
+
+    # A* returning the optimal path from S to G
+    #aStarPath = aStar(main_maze, start, goal)
+    #print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
+    #colored_maze = colorPath(aStarPath, main_maze)
+    #plt.imshow(colored_maze)
+    #plt.show()
+
+    #spread_maze = main_maze
+    #for x in range(20):
+    #    spread_maze = spread_fire(main_maze)
+    #plt.imshow(spread_maze)
+    #plt.show()
 
 if __name__ == "__main__":
     main()
