@@ -11,7 +11,7 @@ def bfs(maze, start, goal, mlen):
     queue = deque([[start, ""]])
 
     # create a visited list (interchangable with set) 
-    visited = np.zeros((mlen, mlen))
+    visited = set()
 
     # Convert the 2D array into a dictionary
     tree = arrayToTree(maze)
@@ -26,7 +26,7 @@ def bfs(maze, start, goal, mlen):
 
         (x, y) = node
          # if the goal is found, return true for now -> need to figure out what to do with display
-        if (x, y) == goal:
+        if node == goal:
             return path
 
          # keep getting an out of bounds axis error
@@ -34,26 +34,28 @@ def bfs(maze, start, goal, mlen):
             continue
 
          # if the node is blocked, on fire, or already visited, skip it and move on
-        if maze[x, y] >= 1 or visited[x, y] == 1:
+        #if maze[x, y] >= 1 or visited[x, y] == 1:
+        if maze[x, y] >= 1:
             continue
 
          # if the node is empty and hasnt been visited yet, add its neighbours to the queue with right/down prio
-        elif maze[x, y] == 0 and visited[x, y] == 0:
-            visited[x, y] = 1 # mark it as visited (may need to change)
+        elif maze[x, y] == 0 and node not in visited:
+            visited.add(node) # mark it as visited (may need to change)
             for movement, neighborElements in tree[node]:
-                path = path + movement
-                node = (x+1, y)
+                #path = path + movement
+                queue.append((neighborElements, path+movement))
+            #node = (x+1, y)
             #path = newPath
-                tuples = node, path
-                queue.append(tuples) # add right
-                node = (x, y+1)
-                tuples = node, path
-                queue.append(tuples) # add down
-                node = (x, y-1)
-                tuples = node, path
-                queue.append(tuples) # add up
-                node = (x-1, y)
-                tuples = node, path
-                queue.append(tuples) # add left
+            #tuples = node, path
+            #queue.append(tuples) # add right
+            #node = (x, y+1)
+            #tuples = node, path
+            #queue.append(tuples) # add down
+            #node = (x, y-1)
+            #tuples = node, path
+            #queue.append(tuples) # add up
+            #node = (x-1, y)
+            #tuples = node, path
+            #queue.append(tuples) # add left
 
     return "No such path from S to G exists" # filler for now
