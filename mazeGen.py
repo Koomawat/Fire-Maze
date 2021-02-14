@@ -184,3 +184,18 @@ def colorPath(path, main_maze, y, x):
 
     return maze
     
+def pathToPosition(position, x, y):
+    
+    posCopy = position
+
+    for element in posCopy:
+        if(element == 'D'):
+            x = x+1
+        if(element == 'R'):
+            y = y+1
+        if(element == 'U'):
+            x = x-1
+        if(element== 'L'):
+            y = y-1
+
+    return (x,y)

@@ -3,15 +3,57 @@ from heapq import heappush
 import copy
 from mazeGen import *
 import math
+from fire import *
 
+
+def stratTwoAStar(maze, aStarPath, goal):
+
+    spread_maze = maze
+    pathCopy = aStarPath[0]
+    currentPos = pathToPosition(pathCopy, 0, 0)
+
+    if(aStarPath != "No such path from S to G exists."):
+        while (currentPos != goal):
+
+            x = currentPos[0]
+            y = currentPos[1]
+
+            spread_maze = spread_fire(spread_maze)
+
+            if(spread_maze[x,y] == 2):
+                response = "Agent died!"
+                return response
+
+            newAStarPath = aStar(spread_maze, currentPos, goal)
+
+            if(newAStarPath == "No such path from S to G exists."):
+                return newAStarPath
+
+            pathCopy = newAStarPath[0]
+            currentPos = pathToPosition(pathCopy, x, y)
+
+            color_maze = colorPath(newAStarPath, spread_maze, x, y)
+            plt.imshow(color_maze)
+            plt.show()
+    else:
+        response = "No such path from S to G exists."
+        return response
+
+    if (currentPos == goal):
+        response = "Agent survived!"
+        return response
 
 
 def euclideanHeuristic(child, goal):
     # Using the euclidean metric but not having the square root as it will cost too much
     return math.sqrt(abs(((child[0] - goal[0])**2) + ((child[1] - goal[1])**2)))
 
+
 def aStar(main_maze, start, goal):
     
+    if(start == goal):
+        return ""
+
     maze = copy.deepcopy(main_maze)
 
     # Initializing priority queue list/heap
