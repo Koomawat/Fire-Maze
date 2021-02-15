@@ -3,9 +3,46 @@ from collections import deque
 from mazeGen import *
 import mazeGen
 import copy
+from fire import *
+
+def stratTwoBfs(maze, optimalpath, goal, mlen):
+
+    spread_maze = maze
+    pathCopy = optimalpath[0]
+    currentPos = pathToPosition(pathCopy, 0, 0)
+
+    if(optimalpath != "No such path from S to G exists."):
+        while (currentPos != goal):
+
+            x = currentPos[0]
+            y = currentPos[1]
+
+            spread_maze = spread_fire(spread_maze)
+
+            if(spread_maze[x,y] == 2):
+                response = "Agent died!"
+                return response
+
+            newBfsPath = bfs(spread_maze, currentPos, goal, mlen)
+
+            if(newBfsPath == "No such path from S to G exists."):
+                return newBfsPath
+
+            pathCopy = newBfsPath[0]
+            currentPos = pathToPosition(pathCopy, x, y)
+
+            color_maze = colorPath(newBfsPath, spread_maze, x, y)
+            plt.imshow(color_maze)
+            plt.show()
+    else:
+        response = "No such path from S to G exists."
+        return response
+
+    if (currentPos == goal):
+        response = "Agent survived!"
+        return response
 
 # take the maze, start, goal, and length of one side as parameters
-# marking visited nodes as 1 but could also just use a visited set and add the nodes as it traverses
 def bfs(main_maze, start, goal, mlen):
 
     maze = copy.deepcopy(main_maze)
@@ -13,7 +50,7 @@ def bfs(main_maze, start, goal, mlen):
     # Initialize the queue and set the start and empty path string
     queue = deque([[start, ""]])
 
-    # create a visited set (interchangable with list) 
+    # create a visited set (can do with list too) 
     visited = set()
 
     # Convert the 2D array into a dictionary
@@ -45,7 +82,7 @@ def bfs(main_maze, start, goal, mlen):
             visited.add(node) # mark it as visited by adding to the set
             for movement, neighborElements in tree[node]:
                 # path = path + movement
-                queue.append((neighborElements, path+movement))
+                queue.append((neighborElements, path + movement))
             #node = (x+1, y)
             #path = newPath
             #tuples = node, path
