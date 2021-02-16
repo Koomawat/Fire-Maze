@@ -62,6 +62,7 @@ def arrayToTree(maze):
     tree = {(x, y): 
     # Values only set for elements where there is a free cell 
     # Occupied cells (represented by 1) and fire cells (represented by 2) are ignored
+    # 4 represents a future fire state
     []  for y in range(dim) 
             for x in range(dim) 
                 if not (maze[x,y] == 1 or maze[x,y] == 2)}
@@ -180,7 +181,22 @@ def colorPath(path, main_maze, y, x):
         elif letter == "D":
             y += 1
         # [row, col]
-        maze[y, x] = 3
+
+        if x >= mlen or y >= mlen or x < 0 or y < 0:
+            pass
+        else:
+            maze[y, x] = 3
+
+    return maze
+
+def singleColorPath(path, main_maze, y, x): 
+    
+    maze = copy.deepcopy(main_maze)
+
+    # color in start position
+    maze[y, x] = 3
+
+    mlen = len(maze)
 
     return maze
     

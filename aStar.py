@@ -1,9 +1,72 @@
 from heapq import heappop
 from heapq import heappush
+# heapq (also known as priority queue) citation: https://docs.python.org/3/library/heapq.html
 import copy
 from mazeGen import *
 import math
 from fire import *
+
+def stratThreeAStar(maze, aStarPath, goal):
+
+    spread_maze = maze
+
+    pathCopy = aStarPath[0]
+    currentPos = pathToPosition(pathCopy, 0, 0)
+
+    mlen = len(spread_maze)
+
+    count = 1
+
+
+    if(aStarPath != "No such path from S to G exists."):
+
+        while (currentPos != goal):
+
+            x = currentPos[0]
+            y = currentPos[1]
+            
+            if (x > mlen-1) or (y > mlen-1):
+                break
+
+            spread_maze = spread_fire(spread_maze)
+            future_spread = future_fire(spread_maze)
+            #print(pathCopy)
+            #print(x,y)
+            color_maze = singleColorPath(pathCopy, future_spread, x, y)
+            plt.imshow(color_maze)
+            plt.show()
+
+            mlen = len(future_spread)
+
+            if(spread_maze[x,y] == 2):
+                response = "Agent died!"
+                return response
+
+            if (future_spread[x,y] == 4):
+                aStarPath = aStar(future_spread, currentPos, goal)
+                pathCopy = aStarPath[0]
+                currentPos = pathToPosition(pathCopy, x, y)
+                
+                count = 1
+                if(aStarPath == "No such path from S to G exists."):
+                    return aStarPath
+
+            else:
+                pathCopy = aStarPath[count]
+                currentPos = pathToPosition(pathCopy, x, y)
+                x = currentPos[0]
+                y = currentPos[1]
+                count += 1
+
+            
+
+    else:
+        response = "No such path from S to G exists."
+        return response
+
+    if (currentPos == goal):
+        response = "Agent survived!"
+        return response
 
 
 def stratTwoAStar(maze, aStarPath, goal):
@@ -32,9 +95,9 @@ def stratTwoAStar(maze, aStarPath, goal):
             pathCopy = newAStarPath[0]
             currentPos = pathToPosition(pathCopy, x, y)
 
-            color_maze = colorPath(newAStarPath, spread_maze, x, y)
-            plt.imshow(color_maze)
-            plt.show()
+            #color_maze = colorPath(newAStarPath, spread_maze, x, y)
+            #plt.imshow(color_maze)
+            #plt.show()
     else:
         response = "No such path from S to G exists."
         return response
@@ -51,7 +114,6 @@ def euclideanHeuristic(child, goal):
 
 def aStar(main_maze, start, goal):
     
-    #if the start is already the goal, just return an empty string
     if(start == goal):
         return ""
 
@@ -96,4 +158,5 @@ def aStar(main_maze, start, goal):
             itemUpdate = (huristicCost + euclideanHeuristic(neighborElements, goal), huristicCost+1 , neighborElements, newPath)
             heappush(priorityQueue, itemUpdate)
     
+    # If path was not returned it and there's no longer a priority queue, no path from S to G was found
     return "No such path from S to G exists."
