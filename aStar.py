@@ -46,11 +46,12 @@ def stratTwoAStar(maze, aStarPath, goal):
 
 def euclideanHeuristic(child, goal):
     # Using the euclidean metric but not having the square root as it will cost too much
-    return math.sqrt(abs(((child[0] - goal[0])**2) + ((child[1] - goal[1])**2)))
+    return abs(((child[0] - goal[0])**2) + ((child[1] - goal[1])**2))
 
 
 def aStar(main_maze, start, goal):
     
+    #if the start is already the goal, just return an empty string
     if(start == goal):
         return ""
 
