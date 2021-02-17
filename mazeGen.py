@@ -33,6 +33,14 @@ def mazeGen():
     maze[0,0] = 0
     maze[maze_length-1,maze_length-1] = 0
 
+    
+
+    return maze, maze_length
+
+def initialFire(main_maze, maze_length):
+
+    maze = copy.deepcopy(main_maze)
+
     # Here we find a random free cell in the Maze for the initial fire position
     # tuple1, tuple2 represent the 
     tuple1 = 0
@@ -51,7 +59,7 @@ def mazeGen():
     # Setting the random tuple as the initial fire spot 
     maze[tuple1,tuple2] = 2
 
-    return maze, maze_length, (tuple1, tuple2)
+    return maze, (tuple1, tuple2)
 
 def arrayToTree(maze):
     

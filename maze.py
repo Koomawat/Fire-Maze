@@ -10,10 +10,11 @@ from matplotlib import colors
 
 def main():
 
-    main_maze, mlen, fire_initial = mazeGen.mazeGen()
+    main_maze, mlen = mazeGen.mazeGen()
     # Using matplotlib to visualize the Maze in a grid view
     # plt.imshow(main_maze)
     # plt.show()
+    main_maze, fire_initial = mazeGen.initialFire(main_maze, len(main_maze))
 
     start = (0,0)
     goal = (mlen-1, mlen-1)
