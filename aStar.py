@@ -6,7 +6,7 @@ from mazeGen import *
 import math
 from fire import *
 
-def stratThreeAStar(maze, aStarPath, goal):
+def stratThreeAStar(maze, aStarPath, goal, q):
 
     spread_maze = maze
 
@@ -28,7 +28,7 @@ def stratThreeAStar(maze, aStarPath, goal):
             if (x > mlen-1) or (y > mlen-1):
                 break
 
-            spread_maze = spread_fire(spread_maze)
+            spread_maze = spread_fire(spread_maze, q)
             future_spread = future_fire(spread_maze)
             #print(pathCopy)
             #print(x,y)
@@ -69,7 +69,7 @@ def stratThreeAStar(maze, aStarPath, goal):
         return response
 
 
-def stratTwoAStar(maze, aStarPath, goal):
+def stratTwoAStar(maze, aStarPath, goal, q):
 
     spread_maze = maze
     pathCopy = aStarPath[0]
@@ -81,7 +81,7 @@ def stratTwoAStar(maze, aStarPath, goal):
             x = currentPos[0]
             y = currentPos[1]
 
-            spread_maze = spread_fire(spread_maze)
+            spread_maze = spread_fire(spread_maze, q)
 
             if(spread_maze[x,y] == 2):
                 response = "Agent died!"

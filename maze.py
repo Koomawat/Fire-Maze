@@ -18,13 +18,13 @@ def main():
     # for each flammability 
     for x in range(1, 10):
         q = x * 0.1
-
         getQ(q)
+        print(q)
 
         mazes = []
 
         # generate maze 10 times
-        for x in range(0, 10):
+        for y in range(0, 10):
             # generate a map
             main_maze, mlen = mazeGen.mazeGen(mazelength)
             # put initial fire
@@ -42,7 +42,7 @@ def main():
                 fire_reachable = dfs(maze, (0,0), fire_initial, mlen)
                 reachable = dfs(maze, (0,0), (mlen-1, mlen-1), mlen)
             # if reachable, append mazes list
-            mazes.append(main_maze)
+            mazes.append(maze)
 
         success_count = 0
         # for each valid maze 
@@ -50,14 +50,18 @@ def main():
             # run algo 
             # current status: strat 2, A*
             aStarPath = aStar(currMaze, (0,0), (mlen-1, mlen-1))
-            aStarPath = stratTwoAStar(currMaze, aStarPath, (mlen-1, mlen-1))
-            if "No" not in aStarPath:
+            aStarPath2 = stratTwoAStar(currMaze, aStarPath, (mlen-1, mlen-1), q)
+            # print(aStarPath2)
+            if "survived" in aStarPath2:
                 success_count += 1
-        
+
         avg = success_count/10
         average.append(avg)
     
     plt.scatter(flammability, average, marker='o')
+    plt.xlabel('Flammability q')
+    plt.ylabel('Average success')
+    plt.title('Strategy 2 of A* Algorithm')
     plt.show()
 
 

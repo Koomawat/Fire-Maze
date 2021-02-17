@@ -128,7 +128,7 @@ def future_fire(maze):
 
     return c_maze
 
-def spread_fire(maze):
+def spread_fire(maze, q):
 
     # copying mazes to not change original
     c_maze = copy.deepcopy(maze)
@@ -144,7 +144,6 @@ def spread_fire(maze):
                 # k represents the number of fire neighbors of the current cell
                 k = count_neighbor(c_maze, x, y)
                 # q, flammability rate
-                q = getQ()
                 # probabilty = 1 - (1-q)^k
                 prob = 1 - (math.pow((1 - q),k))
                 # getting a number between 0 and 1

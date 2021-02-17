@@ -5,7 +5,7 @@ import mazeGen
 import copy
 from fire import *
 
-def stratTwoBfs(maze, optimalpath, goal, mlen):
+def stratTwoBfs(maze, optimalpath, goal, mlen, q):
 
     spread_maze = maze
     pathCopy = optimalpath[0]
@@ -17,7 +17,7 @@ def stratTwoBfs(maze, optimalpath, goal, mlen):
             x = currentPos[0]
             y = currentPos[1]
 
-            spread_maze = spread_fire(spread_maze)
+            spread_maze = spread_fire(spread_maze, q)
 
             if(spread_maze[x,y] == 2):
                 response = "Agent died!"
