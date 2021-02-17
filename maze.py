@@ -19,7 +19,7 @@ def main():
     goal = (mlen-1, mlen-1)
 
     # dfs checks if one point to another is reachable or not
-    fire_reachable = reachable = dfs(main_maze, start, fire_initial, mlen)
+    fire_reachable = dfs(main_maze, start, fire_initial, mlen)
     print(f'Is there a path from agent to fire {fire_initial} using DFS?: {fire_reachable}')
     reachable = dfs(main_maze, start, goal, mlen)
     print(f'Is there a path from {start} to {goal} using DFS?: {reachable}')
