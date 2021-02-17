@@ -10,16 +10,17 @@ from matplotlib import colors
 
 def main():
 
-    plotting()
+    # plotting()
+    
+    maze_length = int(input("Enter the length of a square maze: "))
+    main_maze, mlen = mazeGen.mazeGen(maze_length)
+    # Using matplotlib to visualize the Maze in a grid view
+    # plt.imshow(main_maze)
+    # plt.show()
+    main_maze, fire_initial = mazeGen.initialFire(main_maze, len(main_maze))
 
-    # main_maze, mlen = mazeGen.mazeGen()
-    # # Using matplotlib to visualize the Maze in a grid view
-    # # plt.imshow(main_maze)
-    # # plt.show()
-    # main_maze, fire_initial = mazeGen.initialFire(main_maze, len(main_maze))
-
-    # start = (0,0)
-    # goal = (mlen-1, mlen-1)
+    start = (0,0)
+    goal = (mlen-1, mlen-1)
 
     # # dfs checks if one point to another is reachable or not
     # fire_reachable = dfs(main_maze, start, fire_initial, mlen)
@@ -36,21 +37,21 @@ def main():
     #plt.show()
 
     # # A* returning the optimal path from S to G
-    # aStarPath = aStar(main_maze, start, goal)
-    # print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
-    # color_maze = colorPath(aStarPath, main_maze, 0, 0)
-    # plt.imshow(color_maze)
-    # plt.show()
+    aStarPath = aStar(main_maze, start, goal)
+    print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
+    color_maze = colorPath(aStarPath, main_maze, 0, 0)
+    plt.imshow(color_maze)
+    plt.show()
 
-    #fired = future_fire(color_maze)
-    #plt.imshow(fired)
-    #plt.show()
+    fired = future_fire(color_maze)
+    plt.imshow(fired)
+    plt.show()
 
-    #answer2 = stratTwoAStar(main_maze, aStarPath, goal)
-    #print (answer2)
+    answer2 = stratTwoAStar(main_maze, aStarPath, goal)
+    print (answer2)
 
-    # answer3 = stratThreeAStar(main_maze, aStarPath, goal)
-    # print (answer3)
+    answer3 = stratThreeAStar(main_maze, aStarPath, goal)
+    print (answer3)
 
 
 def plotting():
@@ -94,12 +95,14 @@ def plotting():
         # for each valid maze 
         for currMaze in mazes:
             # run algo 
-            # current status: strat 2, A*
+            # current status: strat 1, A*
             aStarPath = aStar(currMaze, (0,0), (mlen-1, mlen-1))
-            aStarPath2 = stratTwoAStar(currMaze, aStarPath, (mlen-1, mlen-1), q)
-            # print(aStarPath2)
-            if "survived" in aStarPath2:
+            if "No" not in aStarPath:
                 success_count += 1
+            
+            # aStarPath2 = stratTwoAStar(currMaze, aStarPath, (mlen-1, mlen-1), q)
+            # if "survived" in aStarPath2:
+            #     success_count += 1
 
         avg = success_count/10
         average.append(avg)
@@ -107,7 +110,8 @@ def plotting():
     plt.scatter(flammability, average, marker='o')
     plt.xlabel('Flammability q')
     plt.ylabel('Average success')
-    plt.title('Strategy 2 of A* Algorithm')
+    plt.title('Strategy 1, A* Algorithm')
+    # plt.title('Strategy 2, A* Algorithm')
     plt.show()
 
 if __name__ == "__main__":
