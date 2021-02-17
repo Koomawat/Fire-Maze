@@ -31,9 +31,9 @@ def stratTwoBfs(maze, optimalpath, goal, mlen):
             pathCopy = newBfsPath[0]
             currentPos = pathToPosition(pathCopy, x, y)
 
-            color_maze = colorPath(newBfsPath, spread_maze, x, y)
-            plt.imshow(color_maze)
-            plt.show()
+            #color_maze = colorPath(newBfsPath, spread_maze, x, y)
+            #plt.imshow(color_maze)
+            #plt.show()
     else:
         response = "No such path from S to G exists."
         return response
