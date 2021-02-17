@@ -5,39 +5,182 @@ import mazeGen
 import copy
 from fire import *
 
-def stratTwoBfs(maze, optimalpath, goal, mlen, q):
+def stratThreeBfs(maze, optimalPath, goal, mlen):
 
+    # Copy of maze to call spread fire on
     spread_maze = maze
-    pathCopy = optimalpath[0]
+
+    # Retreiving first direction of movement from bfs initial path
+    pathCopy = optimalPath[0]
+
+    # Converting current direction value to a tuple value
     currentPos = pathToPosition(pathCopy, 0, 0)
 
-    if(optimalpath != "No such path from S to G exists."):
+    # Count will be used to traverse on calculated paths until we need to recalculate a path and count needs to be resetted
+    count = 1
+
+    # Flammability rate
+    q = getQ()
+
+    # When a path exists from S to G
+    if(optimalPath != "No such path from S to G exists."):
+
+        # While the current tuple is not the goal tuple we keep looping
         while (currentPos != goal):
 
+            # x,y to get respective tuple values from (x,y)
             x = currentPos[0]
             y = currentPos[1]
+            
+            # Bounds check for x and y
+            if (x > mlen-1) or (y > mlen-1):
+                break
 
+            # Calling spread_fire to spread the fire at every step
             spread_maze = spread_fire(spread_maze, q)
+            # Calling future_fire on spread_maze to get a future fire zone in the maze (indicated by a value of 4)
+            future_spread = future_fire(spread_maze)
 
+            # If somehow the agent and fire meet on the same cell the agent will die 
             if(spread_maze[x,y] == 2):
                 response = "Agent died!"
                 return response
 
-            newBfsPath = bfs(spread_maze, currentPos, goal, mlen)
+            # Bounds check for future fires
+            if(x+1 < mlen and y+1 < mlen):
+                # If a neighbor cell is a future fire cell state, we begin the path recomputation process
+                if((future_spread[x+1,y] == 4) or (future_spread[x-1,y] == 4) or (future_spread[x,y+1] == 4) or (future_spread[x,y-1] == 4)):
+                    
+                    # If somehow the agent is trapped between future fires states, we call the new path that goes through the future fire so the agent is not stuck         
+                    if (future_spread[x+1, y] != 0) and (future_spread[x-1, y] != 0) and (future_spread[x, y+1] != 0) and (future_spread[x, y-1] != 0):
+                        optimalPath = bfs(spread_maze, currentPos, goal, mlen)
+                    # If not, the path recalculated starts from the closest free state cell (indicated by 0) to the goal 
+                    else:
+                        optimalPath = bfs(future_spread, currentPos, goal, mlen)
 
-            if(newBfsPath == "No such path from S to G exists."):
-                return newBfsPath
+                    # Setting the new direction value from the new calculated path
+                    pathCopy = optimalPath[0]
+                    # Converting new first direction to a tuple value 
+                    currentPos = pathToPosition(pathCopy, x, y)
+                    # Finding the x,y of the new tuple value (x,y)
+                    x = currentPos[0]
+                    y = currentPos[1]
+                    # Resetting the count back to 1 just incase if we do not need a path recalculation instantly 
+                    count = 1
+                    if(optimalPath == "No such path from S to G exists."):
+                        optimalPath = f"No such path from {x}, {y} to G exists."
+                        return optimalPath
 
-            pathCopy = newBfsPath[0]
-            currentPos = pathToPosition(pathCopy, x, y)
+                # If the current cell has no future fire state cells then we simply keep following the most recently calculated path
+                else:
 
-            #color_maze = colorPath(newBfsPath, spread_maze, x, y)
-            #plt.imshow(color_maze)
-            #plt.show()
+                    # Setting value of the next direction     
+                    pathCopy = optimalPath[count]
+                    # Converting it into a tuple
+                    currentPos = pathToPosition(pathCopy, x, y)
+                    # Setting the x, y of the tuple (x,y) we made
+                    x = currentPos[0]
+                    y = currentPos[1]
+                    # Incrementing count by 1 if we keep following the same path so we get the next direction in line
+                    count += 1
+
+            else:
+                # Another repeat of the what's above except here we are treating an edge case where the agent's only path was to a future fire state cell
+                if(future_spread[x,y] == 4):
+                            
+                    # If somehow the agent is trapped between future fires states, we call the new path that goes through the future fire so the agent is not stuck
+                    if (future_spread[x+1, y] != 0) and (future_spread[x-1, y] != 0) and (future_spread[x, y+1] != 0) and (future_spread[x, y-1] != 0):
+                        optimalPath = bfs(spread_maze, currentPos, goal, mlen)
+                    else:
+                    # If not, the path recalculated starts from the closest free state cell (indicated by 0) to the goal
+                        optimalPath = bfs(future_spread, currentPos, goal, mlen)
+
+                    # Setting the new direction value from the new calculated path
+                    pathCopy = optimalPath[0]
+                    # Converting new first direction to a tuple value
+                    currentPos = pathToPosition(pathCopy, x, y)
+                    # Finding the x,y of the new tuple value (x,y)
+                    x = currentPos[0]
+                    y = currentPos[1]
+                    # Resetting the count back to 1 just incase if we do not need a path recalculation instantly 
+                    count = 1
+
+                    # If the newly returned path tells us not path exists then the Agent is trapped and can no longer reach the goal
+                    if(optimalPath == "No such path from S to G exists."):
+                        optimalPath = f"No such path from {x}, {y} to G exists."
+                        return optimalPath
+                
+                # If the current cell has no future fire state cells then we simply keep following the most recently calculated path
+                else:
+                        
+                    # Setting value of the next direction 
+                    pathCopy = optimalPath[count]
+                    # Converting it into a tuple
+                    currentPos = pathToPosition(pathCopy, x, y)
+                    # Setting the x, y of the tuple (x,y) we made
+                    x = currentPos[0]
+                    y = currentPos[1]
+                    # Incrementing count by 1 if we keep following the same path so we get the next direction in line
+                    count += 1
+                
+    # If the initial path found no successful path, we return that it's not possible to get from S to G
     else:
         response = "No such path from S to G exists."
         return response
 
+    # If the current position tuple is the goal tuple it means the agent made it from S to G!
+    if (currentPos == goal):
+        response = "Agent survived!"
+        return response
+
+def stratTwoBfs(maze, optimalpath, goal, mlen):
+
+    # Copy of maze to call spread fire on
+    spread_maze = maze
+
+    # Retreiving first direction of movement from A* initial path
+    pathCopy = optimalpath[0]
+
+    # Converting current direction value to a tuple value
+    currentPos = pathToPosition(pathCopy, 0, 0)
+
+    # Flammability rate
+    q = getQ()
+
+    # When a path exists from S to G
+    if(optimalpath != "No such path from S to G exists."):
+        while (currentPos != goal):
+
+            # x,y tuple values from current position
+            x = currentPos[0]
+            y = currentPos[1]
+
+            # Spreading fire 1 step on the maze we are working with
+            spread_maze = spread_fire(spread_maze, q)
+
+            # If the fire spreads onto the agent they die 
+            if(spread_maze[x,y] == 2):
+                response = "Agent died!"
+                return response
+
+            # Finding the new path after every time step
+            newBfsPath = bfs(spread_maze, currentPos, goal, mlen)
+
+            # If the newly returned path tells us not path exists then the Agent is trapped and can no longer reach the goal
+            if(newBfsPath == "No such path from S to G exists."):
+                return newBfsPath
+
+            # Setting value of the new direction from the new path
+            pathCopy = newBfsPath[0]
+            # Converting the new direction into a tuple value
+            currentPos = pathToPosition(pathCopy, x, y)
+
+    # If the initial path found no successful path, we return that it's not possible to get from S to G
+    else:
+        response = "No such path from S to G exists."
+        return response
+
+    # If the current position tuple is the goal tuple it means the agent made it from S to G!
     if (currentPos == goal):
         response = "Agent survived!"
         return response
