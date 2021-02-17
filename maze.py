@@ -44,9 +44,9 @@ def path():
 
 def main():
 
-    # plotting()
+    plotting()
 
-    path()
+    # path()
     
 
 def plotting():
@@ -90,24 +90,42 @@ def plotting():
         for currMaze in mazes:
             # run algo 
 
+            ##################### Strategy 1 #####################
+
             # strat 1, A*
             aStarPath = aStar(currMaze, (0,0), (mlen-1, mlen-1))
-            # if "No" not in aStarPath:
+            msg = traversePath(aStarPath, currMaze, 0, 0, q)
+            if "No" not in msg:
+                success_count += 1
+            plt.title('Strategy 1, A* Algorithm')
+            # plt.imshow(maze)
+            # plt.show()
+
+            # # strat 1, BFS
+            # optimalpath = bfs(main_maze, (0,0), (mlen-1,mlen-1), mlen)
+            # if "No" not in optimalpath:
             #     success_count += 1
-            # plt.title('Strategy 1, A* Algorithm')
+            # plt.title('Strategy 1, BFS Algorithm')
+            
+            ##################### Strategy 2 #####################
             
             # strat 2
-            # aStarPath2 = stratTwoAStar(currMaze, aStarPath, (mlen-1, mlen-1), q)
-            # if "survived" in aStarPath2:
+            # aStarPath = aStar(currMaze, (0,0), (mlen-1, mlen-1), q)
+            # _, msg, _ = stratTwoAStar(currMaze, aStarPath, (mlen-1, mlen-1), q, '')
+            # print(msg)
+            # if "survived" in msg:
             #     success_count += 1
             # plt.title('Strategy 2, A* Algorithm')
 
+            ##################### Strategy 3 #####################
+
             # strat 3
-            aStarPath3 = stratThreeAStar(currMaze, aStarPath, (mlen-1, mlen-1), q, '')
-            print (aStarPath3)
-            if "survived" in aStarPath3:
-                success_count += 1
-            plt.title('Strategy 3, A* Algorithm')
+            # aStarPath = aStar(currMaze, (0,0), (mlen-1, mlen-1))
+            # _, msg, _ = stratThreeAStar(currMaze, aStarPath, (mlen-1, mlen-1), q, '')
+            # print (aStarPath3)
+            # if "survived" in aStarPath3:
+            #     success_count += 1
+            # plt.title('Strategy 3, A* Algorithm')
 
         avg = success_count/10
         average.append(avg)

@@ -41,7 +41,7 @@ def stratThreeAStar(maze, aStarPath, goal, q, ogPath):
             future_spread = future_fire(spread_maze, q)
 
             # Plot testing code under to see each agent movement 1 by 1 as well as the fire/future fire spreading 
-            color_maze = singleColorPath(future_spread, x, y)
+            # color_maze = singleColorPath(future_spread, x, y)
 
             ogPath += pathCopy
             # print(ogPath)
@@ -52,7 +52,7 @@ def stratThreeAStar(maze, aStarPath, goal, q, ogPath):
             if(spread_maze[x,y] == 2):
                 response = ogPath + pathCopy
                 msg = "Agent died! b "
-                print(response)
+                # print(response)
                 return response, msg, spread_maze
 
             # Bounds check for future fires
@@ -85,7 +85,7 @@ def stratThreeAStar(maze, aStarPath, goal, q, ogPath):
                     if(aStarPath == "No such path from S to G exists."):
                         response = ogPath + pathCopy
                         msg = "Agent died! a"
-                        print(response)
+                        # print(response)
                         return response, msg, spread_maze
 
                 # If the current cell has no future fire state cells then we simply keep following the most recently calculated path
@@ -131,7 +131,7 @@ def stratThreeAStar(maze, aStarPath, goal, q, ogPath):
                     if(aStarPath == "No such path from S to G exists."):
                         response = ogPath + pathCopy
                         msg = "Agent died!c"
-                        print(response)
+                        # print(response)
                         return response, msg, spread_maze
 
                 # If the current cell has no future fire state cells then we simply keep following the most recently calculated path
@@ -152,7 +152,7 @@ def stratThreeAStar(maze, aStarPath, goal, q, ogPath):
     else:
         response = ogPath + pathCopy
         msg = "No such path from S to G exists."
-        print(response)
+        # print(response)
         return response, msg, spread_maze
 
     # If the current position tuple is the goal tuple it means the agent made it from S to G!
@@ -194,17 +194,17 @@ def stratTwoAStar(maze, aStarPath, goal, q, ogPath):
             if(spread_maze[x,y] == 2):
                 response = ogPath + pathCopy
                 msg = "Agent died! b "
-                print(response)
+                # print(response)
                 return response, msg, spread_maze
 
             # Finding the new path after every time step
-            newAStarPath = aStar(spread_maze, currentPos, goal)
+            newAStarPath = aStar(spread_maze, currentPos, goal, q)
 
             # If the newly returned path tells us not path exists then the Agent is trapped and can no longer reach the goal
             if(newAStarPath == "No such path from S to G exists."):
                 response = ogPath + pathCopy
                 msg = newAStarPath
-                print(response)
+                # print(response)
                 return response, msg, spread_maze
 
             # Setting value of the new direction from the new path
@@ -216,14 +216,14 @@ def stratTwoAStar(maze, aStarPath, goal, q, ogPath):
     else:
         response = ogPath + pathCopy
         msg = "No such path from S to G exists."
-        print(response)
+        # print(response)
         return response, msg, spread_maze
 
     # If the current position tuple is the goal tuple it means the agent made it from S to G!
     if (currentPos == goal):
         response = ogPath + pathCopy
         msg = "Agent survived!"
-        print(response)
+        # print(response)
         return response, msg, spread_maze
 
 
@@ -276,7 +276,7 @@ def aStar(main_maze, start, goal):
 
     # We keep looping as long there is an item in the heap/priority queue
     while priorityQueue:
-
+        
         # Working with the current heuristic, looking at the current cost, setting the path, and tracking current
         currHeuristic, heuristicCost, currentKey, path = aStarPop(priorityQueue)
 
@@ -297,3 +297,4 @@ def aStar(main_maze, start, goal):
     
     # If path was not returned it and there's no longer items in the priority queue, no path from S to G was found
     return "No such path from S to G exists."
+

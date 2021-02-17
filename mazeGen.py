@@ -1,3 +1,4 @@
+from fire import spread_fire
 import numpy as np
 import random
 import copy
@@ -218,3 +219,38 @@ def pathToPosition(position, x, y):
             y = y-1
 
     return (x,y)
+
+def traversePath(path, main_maze, y, x, q): 
+    
+    maze = copy.deepcopy(main_maze)
+    spread_maze = maze
+
+    # color in start position
+    spread_maze[y, x] = 3
+
+    mlen = len(spread_maze)
+    
+    if x >= mlen or y >= mlen or x < 0 or y < 0:
+        return "outie"
+    
+    for letter in path:
+        spread_maze = spread_fire(spread_maze, q)
+        if spread_maze[y, x] == 2:
+            return "No"
+
+        if letter == "R":
+            x += 1
+        elif letter == "L":
+            x -= 1
+        elif letter == "U":
+            y -= 1
+        elif letter == "D":
+            y += 1
+        # [row, col]
+
+        if x >= mlen or y >= mlen or x < 0 or y < 0:
+            return "outie"
+        else:
+            spread_maze[y, x] = 3
+
+    return "Yes"
