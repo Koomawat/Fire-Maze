@@ -14,7 +14,7 @@ def main():
     
     maze_length = int(input("Enter the length of a square maze: "))
     main_maze, mlen = mazeGen.mazeGen(maze_length)
-    q = int(input("Enter the flammability of the maze: "))
+    q = float(input("Enter the flammability of the maze: "))
     # Using matplotlib to visualize the Maze in a grid view
     # plt.imshow(main_maze)
     # plt.show()
