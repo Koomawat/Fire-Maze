@@ -49,8 +49,8 @@ def main():
         for currMaze in mazes:
             # run algo 
             # current status: strat 2, A*
-            aStarPath = aStar(main_maze, (0,0), (mlen-1, mlen-1))
-            aStarPath = stratTwoAStar(main_maze, aStarPath, (mlen-1, mlen-1))
+            aStarPath = aStar(currMaze, (0,0), (mlen-1, mlen-1))
+            aStarPath = stratTwoAStar(currMaze, aStarPath, (mlen-1, mlen-1))
             if "No" not in aStarPath:
                 success_count += 1
         
