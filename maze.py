@@ -13,51 +13,34 @@ def path():
     maze_length = int(input("Enter the length of a square maze: "))
     main_maze, mlen = mazeGen.mazeGen(maze_length)
     q = float(input("Enter the flammability of the maze: "))
-    # Using matplotlib to visualize the Maze in a grid view
-    # plt.imshow(main_maze)
-    # plt.show()
     main_maze, fire_initial = mazeGen.initialFire(main_maze, len(main_maze))
+    
+    # Using matplotlib to visualize the Maze in a grid view
+    plt.imshow(main_maze)
+    plt.show()
+    
 
     start = (0,0)
     goal = (mlen-1, mlen-1)
 
-    # # dfs checks if one point to another is reachable or not
-    # fire_reachable = dfs(main_maze, start, fire_initial, mlen)
-    # print(f'Is there a path from agent to fire {fire_initial} using DFS?: {fire_reachable}')
-    # reachable = dfs(main_maze, start, goal, mlen)
-    # print(f'Is there a path from {start} to {goal} using DFS?: {reachable}')
+    # dfsCheck(main_maze, start, goal, fire_initial, mlen)
 
-    #bfs returns the optimal path from the start to the goal
-    #optimalpath = bfs(main_maze, start, goal, mlen, q)
-    #print(f'Was a shortest path found from {start} to {goal}?: {optimalpath}')
-    #colored_maze = colorPath(optimalpath, main_maze)
-    #plt.imshow(colored_maze)
-    #plt.show()
+    # bfsCheck(main_maze, start, goal, mlen, q)
 
-    # # A* returning the optimal path from S to G
-    aStarPath = aStar(main_maze, start, goal)
-    # print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
-    # color_maze = colorPath(aStarPath, main_maze, 0, 0)
-    # plt.imshow(color_maze)
-    # plt.show()
+    # a1Check(main_maze, start, goal)
 
     # fired = future_fire(color_maze, q)
     # plt.imshow(fired)
     # plt.show()
-
-    answer2, msg, fire_maze = stratTwoAStar(main_maze, aStarPath, goal, q, '')
-    print('answer2: ' + msg)
-    colormap = colorPath(answer2, fire_maze, 0, 0)
-    plt.imshow(colormap)
-    plt.show()
     
+    aStarPath = a1Check(main_maze, start, goal)
+    a2Check(main_maze, aStarPath, goal, q)
+
     print('---------------------')
 
-    answer3, msg, fire_maze = stratThreeAStar(main_maze, aStarPath, goal, q, '')
-    print('answer3: ' + msg)
-    colormap = colorPath(answer3, fire_maze, 0, 0)
-    plt.imshow(colormap)
-    plt.show()
+    aStarPath = a1Check(main_maze, start, goal)
+    a3Check(main_maze, aStarPath, goal, q)
+
 
 def main():
 
@@ -133,6 +116,56 @@ def plotting():
     plt.xlabel('Flammability q')
     plt.ylabel('Average success')
     # plt.title('Strategy 2, A* Algorithm')
+    plt.show()
+
+def dfsCheck(main_maze, start, goal, fire_initial, mlen):
+    # # dfs checks if one point to another is reachable or not
+    # fire_reachable = dfs(main_maze, start, fire_initial, mlen)
+    # print(f'Is there a path from agent to fire {fire_initial} using DFS?: {fire_reachable}')
+    reachable = dfs(main_maze, start, goal, mlen)
+    print(f'Is there a path from {start} to {goal} using DFS?: {reachable}')
+
+    dfs_path = dfs_graph(main_maze, start, goal, mlen)
+    colored_maze = colorPath(dfs_path, main_maze, 0, 0)
+    plt.imshow(colored_maze)
+    plt.show()
+
+
+
+def bfsCheck(main_maze, start, goal, mlen, q):
+    # bfs returns the optimal path from the start to the goal
+    optimalpath = bfs(main_maze, start, goal, mlen, q)
+    print(f'Was a shortest path found from {start} to {goal}?: {optimalpath}')
+
+    colored_maze = colorPath(optimalpath, main_maze, 0, 0)
+    plt.imshow(colored_maze)
+    plt.show()
+
+def a1Check(main_maze, start, goal):
+    # A* returning the optimal path from S to G
+    aStarPath = aStar(main_maze, start, goal)
+    print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
+
+    color_maze = colorPath(aStarPath, main_maze, 0, 0)
+    plt.imshow(color_maze)
+    plt.show()
+    
+    return aStarPath
+
+def a2Check(main_maze, aStarPath, goal, q):
+    answer2, msg, fire_maze = stratTwoAStar(main_maze, aStarPath, goal, q, '')
+    print('answer2: ' + msg)
+
+    colormap = colorPath(answer2, fire_maze, 0, 0)
+    plt.imshow(colormap)
+    plt.show()
+
+def a3Check(main_maze, aStarPath, goal, q):
+    answer3, msg, fire_maze = stratThreeAStar(main_maze, aStarPath, goal, q, '')
+    print('answer3: ' + msg)
+
+    colormap = colorPath(answer3, fire_maze, 0, 0)
+    plt.imshow(colormap)
     plt.show()
 
 if __name__ == "__main__":

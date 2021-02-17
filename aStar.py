@@ -41,10 +41,10 @@ def stratThreeAStar(maze, aStarPath, goal, q, ogPath):
             future_spread = future_fire(spread_maze, q)
 
             # Plot testing code under to see each agent movement 1 by 1 as well as the fire/future fire spreading 
-            color_maze = singleColorPath(pathCopy, future_spread, x, y)
+            color_maze = singleColorPath(future_spread, x, y)
 
             ogPath += pathCopy
-            print(ogPath)
+            # print(ogPath)
             # plt.imshow(color_maze)
             # plt.show()
 

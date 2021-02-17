@@ -194,14 +194,12 @@ def colorPath(path, main_maze, y, x):
 
     return maze
 
-def singleColorPath(path, main_maze, y, x): 
+def singleColorPath(main_maze, y, x, colorCode=3): 
     
     maze = copy.deepcopy(main_maze)
 
     # color in start position
-    maze[y, x] = 3
-
-    mlen = len(maze)
+    maze[y, x] = colorCode
 
     return maze
     
