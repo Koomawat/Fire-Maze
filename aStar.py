@@ -4,14 +4,14 @@ import copy
 from mazeGen import *
 from fire import *
 
-def stratThreeAStar(maze, aStarPath, goal, q):
-
+def stratThreeAStar(maze, aStarPath, goal, q, ogPath):
     # Copy of maze to call spread fire on
     spread_maze = maze
 
     # Retreiving first direction of movement from A* initial path
     pathCopy = aStarPath[0]
-
+    
+    
     # Converting current direction value to a tuple value
     currentPos = pathToPosition(pathCopy, 0, 0)
 
@@ -41,22 +41,33 @@ def stratThreeAStar(maze, aStarPath, goal, q):
             future_spread = future_fire(spread_maze, q)
 
             # Plot testing code under to see each agent movement 1 by 1 as well as the fire/future fire spreading 
-            #color_maze = singleColorPath(pathCopy, future_spread, x, y)
-            #plt.imshow(color_maze)
-            #plt.show()
+            color_maze = singleColorPath(pathCopy, future_spread, x, y)
+
+            ogPath += pathCopy
+            print(ogPath)
+            # plt.imshow(color_maze)
+            # plt.show()
 
             # If somehow the agent and fire meet on the same cell the agent will die 
             if(spread_maze[x,y] == 2):
-                response = "Agent died!"
-                return response
+                response = ogPath + pathCopy
+                msg = "Agent died! b "
+                print(response)
+                color_maze = colorPath(response, spread_maze, 0, 0)
+                plt.imshow(color_maze)
+                plt.show()
+                return response, msg, spread_maze
 
             # Bounds check for future fires
             if(x+1 < mlen and y+1 < mlen):
                 # If a neighbor cell is a future fire cell state, we begin the path recomputation process
                 if((future_spread[x+1,y] == 4) or (future_spread[x-1,y] == 4) or (future_spread[x,y+1] == 4) or (future_spread[x,y-1] == 4)):
                     
+                    aStarPath_copy = aStarPath
+
                     # If somehow the agent is trapped between future fires states, we call the new path that goes through the future fire so the agent is not stuck
-                    if (future_spread[x+1, y] != 0) and (future_spread[x-1, y] != 0) and (future_spread[x, y+1] != 0) and (future_spread[x, y-1] != 0):
+                    if (x+1 < mlen and y+1 < mlen and x-1 >= 0 and y-1 >= 0 
+                    and future_spread[x+1, y] != 0) and (future_spread[x-1, y] != 0) and (future_spread[x, y+1] != 0) and (future_spread[x, y-1] != 0):
                         aStarPath = aStar(spread_maze, currentPos, goal)
                     # If not, the path recalculated starts from the closest free state cell (indicated by 0) to the goal
                     else:
@@ -64,6 +75,7 @@ def stratThreeAStar(maze, aStarPath, goal, q):
 
                     # Setting the new direction value from the new calculated path
                     pathCopy = aStarPath[0]
+
                     # Converting new first direction to a tuple value 
                     currentPos = pathToPosition(pathCopy, x, y)
                     # Finding the x,y of the new tuple value (x,y)
@@ -74,14 +86,20 @@ def stratThreeAStar(maze, aStarPath, goal, q):
 
                     # If the newly returned path tells us not path exists then the Agent is trapped and can no longer reach the goal
                     if(aStarPath == "No such path from S to G exists."):
-                        aStarPath = f"No such path from S to G exists."
-                        return aStarPath
+                        response = ogPath + pathCopy
+                        msg = "Agent died! a"
+                        print(response)
+                        color_maze = colorPath(response, spread_maze, 0, 0)
+                        plt.imshow(color_maze)
+                        plt.show()
+                        return response, msg, spread_maze
 
                 # If the current cell has no future fire state cells then we simply keep following the most recently calculated path
                 else:
                     
                     # Setting value of the next direction 
                     pathCopy = aStarPath[count]
+
                     # Converting it into a tuple
                     currentPos = pathToPosition(pathCopy, x, y)
                     # Setting the x, y of the tuple (x,y) we made
@@ -94,8 +112,11 @@ def stratThreeAStar(maze, aStarPath, goal, q):
                 # Another repeat of the what's above except here we are treating an edge case where the agent's only path was to a future fire state cell
                 if(future_spread[x,y] == 4):
                    
+                    aStarPath_copy = aStarPath
+
                     # If somehow the agent is trapped between future fires states, we call the new path that goes through the future fire so the agent is not stuck
-                    if (future_spread[x+1, y] != 0) and (future_spread[x-1, y] != 0) and (future_spread[x, y+1] != 0) and (future_spread[x, y-1] != 0):
+                    if (x+1 < mlen and y+1 < mlen and x-1 >= 0 and y-1 >= 0 
+                    and future_spread[x+1, y] < 0) and (future_spread[x-1, y] != 0) and (future_spread[x, y+1] != 0) and (future_spread[x, y-1] != 0):
                         aStarPath = aStar(spread_maze, currentPos, goal)
                     else:
                     # If not, the path recalculated starts from the closest free state cell (indicated by 0) to the goal
@@ -103,6 +124,7 @@ def stratThreeAStar(maze, aStarPath, goal, q):
 
                     # Setting the new direction value from the new calculated path
                     pathCopy = aStarPath[0]
+
                     # Converting new first direction to a tuple value 
                     currentPos = pathToPosition(pathCopy, x, y)
                     # Finding the x,y of the new tuple value (x,y)
@@ -113,14 +135,20 @@ def stratThreeAStar(maze, aStarPath, goal, q):
 
                     # If the newly returned path tells us not path exists then the Agent is trapped and can no longer reach the goal
                     if(aStarPath == "No such path from S to G exists."):
-                        aStarPath = f"No such path from S to G exists."
-                        return aStarPath
+                        response = ogPath + pathCopy
+                        msg = "Agent died!c"
+                        print(response)
+                        color_maze = colorPath(response, spread_maze, 0, 0)
+                        plt.imshow(color_maze)
+                        plt.show()
+                        return response, msg, spread_maze
 
                 # If the current cell has no future fire state cells then we simply keep following the most recently calculated path
                 else:
                     
                     # Setting value of the next direction 
                     pathCopy = aStarPath[count]
+                    
                     # Converting it into a tuple
                     currentPos = pathToPosition(pathCopy, x, y)
                     # Setting the x, y of the tuple (x,y) we made
@@ -131,16 +159,26 @@ def stratThreeAStar(maze, aStarPath, goal, q):
     
     # If the initial path found no successful path, we return that it's not possible to get from S to G
     else:
-        response = "No such path from S to G exists."
-        return response
+        response = ogPath + pathCopy
+        msg = "No such path from S to G exists."
+        print(response)
+        color_maze = colorPath(response, spread_maze, 0, 0)
+        plt.imshow(color_maze)
+        plt.show()
+        return response, msg, spread_maze
 
     # If the current position tuple is the goal tuple it means the agent made it from S to G!
     if (currentPos == goal):
-        response = "Agent survived!"
-        return response
+        response = ogPath + pathCopy
+        # color_maze = colorPath(response, spread_maze, 0, 0)
+        # plt.imshow(color_maze)
+        # plt.show()
+        msg = "Agent survived!"
+        return response, msg, spread_maze
 
 
-def stratTwoAStar(maze, aStarPath, goal, q):
+def stratTwoAStar(maze, aStarPath, goal, q, ogPath):
+
 
     # Copy of maze to call spread fire on
     spread_maze = maze
@@ -155,6 +193,8 @@ def stratTwoAStar(maze, aStarPath, goal, q):
     if(aStarPath != "No such path from S to G exists."):
         while (currentPos != goal):
 
+            ogPath += pathCopy
+
             # x,y tuple values from current position
             x = currentPos[0]
             y = currentPos[1]
@@ -164,15 +204,27 @@ def stratTwoAStar(maze, aStarPath, goal, q):
 
             # If the fire spreads onto the agent they die 
             if(spread_maze[x,y] == 2):
-                response = "Agent died!"
-                return response
+                response = ogPath + pathCopy
+                msg = "Agent died! b "
+                print(response)
+                color_maze = colorPath(response, spread_maze, 0, 0)
+                plt.imshow(color_maze)
+                plt.show()
+                return response, msg, spread_maze
 
             # Finding the new path after every time step
             newAStarPath = aStar(spread_maze, currentPos, goal)
 
             # If the newly returned path tells us not path exists then the Agent is trapped and can no longer reach the goal
             if(newAStarPath == "No such path from S to G exists."):
-                return newAStarPath
+                response = ogPath + pathCopy
+                msg = newAStarPath
+                print(response)
+                color_maze = colorPath(response, spread_maze, 0, 0)
+                plt.imshow(color_maze)
+                plt.show()
+                return response, msg, spread_maze
+                return ogPath+pathCopy, newAStarPath, spread_maze
 
             # Setting value of the new direction from the new path
             pathCopy = newAStarPath[0]
@@ -181,13 +233,24 @@ def stratTwoAStar(maze, aStarPath, goal, q):
 
     # If the initial path found no successful path, we return that it's not possible to get from S to G
     else:
-        response = "No such path from S to G exists."
-        return response
+        response = ogPath + pathCopy
+        msg = "No such path from S to G exists."
+        print(response)
+        color_maze = colorPath(response, spread_maze, 0, 0)
+        plt.imshow(color_maze)
+        plt.show()
+        return response, msg, spread_maze
+        return ogPath+pathCopy, response, spread_maze
 
     # If the current position tuple is the goal tuple it means the agent made it from S to G!
     if (currentPos == goal):
-        response = "Agent survived!"
-        return response
+        response = ogPath + pathCopy
+        msg = "Agent survived!"
+        print(response)
+        color_maze = colorPath(response, spread_maze, 0, 0)
+        plt.imshow(color_maze)
+        plt.show()
+        return response, msg, spread_maze
 
 
 def euclideanHeuristic(child, goal):

@@ -5,7 +5,7 @@ import mazeGen
 import copy
 from fire import *
 
-def stratThreeBfs(maze, optimalPath, goal, mlen):
+def stratThreeBfs(maze, optimalPath, goal, mlen, q):
 
     # Copy of maze to call spread fire on
     spread_maze = maze
@@ -18,9 +18,6 @@ def stratThreeBfs(maze, optimalPath, goal, mlen):
 
     # Count will be used to traverse on calculated paths until we need to recalculate a path and count needs to be resetted
     count = 1
-
-    # Flammability rate
-    q = getQ()
 
     # When a path exists from S to G
     if(optimalPath != "No such path from S to G exists."):
@@ -133,7 +130,7 @@ def stratThreeBfs(maze, optimalPath, goal, mlen):
         response = "Agent survived!"
         return response
 
-def stratTwoBfs(maze, optimalpath, goal, mlen):
+def stratTwoBfs(maze, optimalpath, goal, mlen, q):
 
     # Copy of maze to call spread fire on
     spread_maze = maze
@@ -143,9 +140,6 @@ def stratTwoBfs(maze, optimalpath, goal, mlen):
 
     # Converting current direction value to a tuple value
     currentPos = pathToPosition(pathCopy, 0, 0)
-
-    # Flammability rate
-    q = getQ()
 
     # When a path exists from S to G
     if(optimalpath != "No such path from S to G exists."):

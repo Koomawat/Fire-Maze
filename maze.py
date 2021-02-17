@@ -8,10 +8,8 @@ from fire import *
 from matplotlib import pyplot as plt
 from matplotlib import colors
 
-def main():
 
-    # plotting()
-    
+def path():
     maze_length = int(input("Enter the length of a square maze: "))
     main_maze, mlen = mazeGen.mazeGen(maze_length)
     q = float(input("Enter the flammability of the maze: "))
@@ -30,30 +28,45 @@ def main():
     # print(f'Is there a path from {start} to {goal} using DFS?: {reachable}')
 
     #bfs returns the optimal path from the start to the goal
-    #optimalpath = bfs(main_maze, start, goal, mlen)
+    #optimalpath = bfs(main_maze, start, goal, mlen, q)
     #print(f'Was a shortest path found from {start} to {goal}?: {optimalpath}')
-
     #colored_maze = colorPath(optimalpath, main_maze)
     #plt.imshow(colored_maze)
     #plt.show()
 
     # # A* returning the optimal path from S to G
     aStarPath = aStar(main_maze, start, goal)
-    print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
-    color_maze = colorPath(aStarPath, main_maze, 0, 0)
-    plt.imshow(color_maze)
+    # print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
+    # color_maze = colorPath(aStarPath, main_maze, 0, 0)
+    # plt.imshow(color_maze)
+    # plt.show()
+
+    # fired = future_fire(color_maze, q)
+    # plt.imshow(fired)
+    # plt.show()
+
+    answer2, msg, fire_maze = stratTwoAStar(main_maze, aStarPath, goal, q, '')
+    print('answer2: ' + msg)
+    colormap = colorPath(answer2, fire_maze, 0, 0)
+    print('outoffuncmap:')
+    plt.imshow(colormap)
+    plt.show()
+    
+    print('---------------------')
+
+    answer3, msg, fire_maze = stratThreeAStar(main_maze, aStarPath, goal, q, '')
+    print('answer3: ' + msg)
+    colormap = colorPath(answer3, fire_maze, 0, 0)
+    print('outoffuncmap:')
+    plt.imshow(colormap)
     plt.show()
 
-    fired = future_fire(color_maze, q)
-    plt.imshow(fired)
-    plt.show()
+def main():
 
-    answer2 = stratTwoAStar(main_maze, aStarPath, goal, q)
-    print (answer2)
+    # plotting()
 
-    answer3 = stratThreeAStar(main_maze, aStarPath, goal, q)
-    print (answer3)
-
+    path()
+    
 
 def plotting():
     flammability = [x * 0.1 for x in range(1, 10)]
@@ -95,14 +108,25 @@ def plotting():
         # for each valid maze 
         for currMaze in mazes:
             # run algo 
-            # current status: strat 1, A*
+
+            # strat 1, A*
             aStarPath = aStar(currMaze, (0,0), (mlen-1, mlen-1))
-            if "No" not in aStarPath:
-                success_count += 1
+            # if "No" not in aStarPath:
+            #     success_count += 1
+            # plt.title('Strategy 1, A* Algorithm')
             
+            # strat 2
             # aStarPath2 = stratTwoAStar(currMaze, aStarPath, (mlen-1, mlen-1), q)
             # if "survived" in aStarPath2:
             #     success_count += 1
+            # plt.title('Strategy 2, A* Algorithm')
+
+            # strat 3
+            aStarPath3 = stratThreeAStar(currMaze, aStarPath, (mlen-1, mlen-1), q, '')
+            print (aStarPath3)
+            if "survived" in aStarPath3:
+                success_count += 1
+            plt.title('Strategy 3, A* Algorithm')
 
         avg = success_count/10
         average.append(avg)
@@ -110,7 +134,6 @@ def plotting():
     plt.scatter(flammability, average, marker='o')
     plt.xlabel('Flammability q')
     plt.ylabel('Average success')
-    plt.title('Strategy 1, A* Algorithm')
     # plt.title('Strategy 2, A* Algorithm')
     plt.show()
 
