@@ -11,7 +11,7 @@ def mazeGen():
     maze = np.zeros((maze_length, maze_length))
 
     # Variable p represents the probability of a cell in the Maze being occupied
-    p = 0.2
+    p = 0.1
 
     # Here we use numpy to traverse the Maze we created
     # For each cell we do a random from 0 to 1 and if the value is p or less the cell will have an occupied state
@@ -51,7 +51,7 @@ def mazeGen():
     # Setting the random tuple as the initial fire spot 
     maze[tuple1,tuple2] = 2
 
-    return maze, maze_length
+    return maze, maze_length, (tuple1, tuple2)
 
 def arrayToTree(maze):
     
