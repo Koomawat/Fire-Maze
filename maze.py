@@ -14,6 +14,7 @@ def main():
     
     maze_length = int(input("Enter the length of a square maze: "))
     main_maze, mlen = mazeGen.mazeGen(maze_length)
+    q = int(input("Enter the flammability of the maze: "))
     # Using matplotlib to visualize the Maze in a grid view
     # plt.imshow(main_maze)
     # plt.show()
@@ -43,7 +44,7 @@ def main():
     plt.imshow(color_maze)
     plt.show()
 
-    fired = future_fire(color_maze)
+    fired = future_fire(color_maze, q)
     plt.imshow(fired)
     plt.show()
 
@@ -63,7 +64,6 @@ def plotting():
     # for each flammability 
     for x in range(1, 10):
         q = x * 0.1
-        getQ(q)
 
         mazes = []
 

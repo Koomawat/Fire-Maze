@@ -2,10 +2,6 @@ import copy
 import random
 import math
 
-# q value for flammability rate
-def getQ(q):
-    return q
-
 def future_fire(maze, q):
 
     # creating a maze copy

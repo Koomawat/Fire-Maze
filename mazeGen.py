@@ -7,7 +7,6 @@ from matplotlib import colors
 def mazeGen(maze_length):
 
     # Taking size of the maze from the user
-    # maze_length = int(input("Enter the length of a square maze: "))
     maze = np.zeros((maze_length, maze_length))
 
     # Variable p represents the probability of a cell in the Maze being occupied
