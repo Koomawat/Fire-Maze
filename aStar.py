@@ -4,7 +4,7 @@ import copy
 from mazeGen import *
 from fire import *
 
-def stratThreeAStar(maze, aStarPath, goal):
+def stratThreeAStar(maze, aStarPath, goal, q):
 
     # Copy of maze to call spread fire on
     spread_maze = maze
@@ -20,9 +20,6 @@ def stratThreeAStar(maze, aStarPath, goal):
 
     # Count will be used to traverse on calculated paths until we need to recalculate a path and count needs to be resetted
     count = 1
-
-    # Flammability rate
-    q = getQ()
 
     # When a path exists from S to G
     if(aStarPath != "No such path from S to G exists."):
@@ -41,7 +38,7 @@ def stratThreeAStar(maze, aStarPath, goal):
             # Calling spread_fire to spread the fire at every step
             spread_maze = spread_fire(spread_maze, q)
             # Calling future_fire on spread_maze to get a future fire zone in the maze (indicated by a value of 4)
-            future_spread = future_fire(spread_maze)
+            future_spread = future_fire(spread_maze, q)
 
             # Plot testing code under to see each agent movement 1 by 1 as well as the fire/future fire spreading 
             #color_maze = singleColorPath(pathCopy, future_spread, x, y)
@@ -143,7 +140,7 @@ def stratThreeAStar(maze, aStarPath, goal):
         return response
 
 
-def stratTwoAStar(maze, aStarPath, goal):
+def stratTwoAStar(maze, aStarPath, goal, q):
 
     # Copy of maze to call spread fire on
     spread_maze = maze
@@ -153,9 +150,6 @@ def stratTwoAStar(maze, aStarPath, goal):
 
     # Converting current direction value to a tuple value
     currentPos = pathToPosition(pathCopy, 0, 0)
-
-    # Flammability rate
-    q = getQ()
 
     # When a path exists from S to G
     if(aStarPath != "No such path from S to G exists."):

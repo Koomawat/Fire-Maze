@@ -2,12 +2,7 @@ import copy
 import random
 import math
 
-# q value for flammability rate
-def getQ():
-    q = 0.1
-    return q
-
-def future_fire(maze):
+def future_fire(maze, q):
 
     # creating a maze copy
     c_maze = copy.deepcopy(maze)
@@ -16,9 +11,6 @@ def future_fire(maze):
     for y in range(len(c_maze)):
         for x in range(len(c_maze)):
             current = c_maze[x, y]
-
-            # Flammability rate
-            q = getQ()
 
             # If currently on a fire cell
             if (current == 2):
