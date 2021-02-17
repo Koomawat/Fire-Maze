@@ -53,9 +53,6 @@ def stratThreeAStar(maze, aStarPath, goal, q, ogPath):
                 response = ogPath + pathCopy
                 msg = "Agent died! b "
                 print(response)
-                color_maze = colorPath(response, spread_maze, 0, 0)
-                plt.imshow(color_maze)
-                plt.show()
                 return response, msg, spread_maze
 
             # Bounds check for future fires
@@ -89,9 +86,6 @@ def stratThreeAStar(maze, aStarPath, goal, q, ogPath):
                         response = ogPath + pathCopy
                         msg = "Agent died! a"
                         print(response)
-                        color_maze = colorPath(response, spread_maze, 0, 0)
-                        plt.imshow(color_maze)
-                        plt.show()
                         return response, msg, spread_maze
 
                 # If the current cell has no future fire state cells then we simply keep following the most recently calculated path
@@ -138,9 +132,6 @@ def stratThreeAStar(maze, aStarPath, goal, q, ogPath):
                         response = ogPath + pathCopy
                         msg = "Agent died!c"
                         print(response)
-                        color_maze = colorPath(response, spread_maze, 0, 0)
-                        plt.imshow(color_maze)
-                        plt.show()
                         return response, msg, spread_maze
 
                 # If the current cell has no future fire state cells then we simply keep following the most recently calculated path
@@ -162,9 +153,6 @@ def stratThreeAStar(maze, aStarPath, goal, q, ogPath):
         response = ogPath + pathCopy
         msg = "No such path from S to G exists."
         print(response)
-        color_maze = colorPath(response, spread_maze, 0, 0)
-        plt.imshow(color_maze)
-        plt.show()
         return response, msg, spread_maze
 
     # If the current position tuple is the goal tuple it means the agent made it from S to G!
@@ -207,9 +195,6 @@ def stratTwoAStar(maze, aStarPath, goal, q, ogPath):
                 response = ogPath + pathCopy
                 msg = "Agent died! b "
                 print(response)
-                color_maze = colorPath(response, spread_maze, 0, 0)
-                plt.imshow(color_maze)
-                plt.show()
                 return response, msg, spread_maze
 
             # Finding the new path after every time step
@@ -220,11 +205,7 @@ def stratTwoAStar(maze, aStarPath, goal, q, ogPath):
                 response = ogPath + pathCopy
                 msg = newAStarPath
                 print(response)
-                color_maze = colorPath(response, spread_maze, 0, 0)
-                plt.imshow(color_maze)
-                plt.show()
                 return response, msg, spread_maze
-                return ogPath+pathCopy, newAStarPath, spread_maze
 
             # Setting value of the new direction from the new path
             pathCopy = newAStarPath[0]
@@ -236,20 +217,13 @@ def stratTwoAStar(maze, aStarPath, goal, q, ogPath):
         response = ogPath + pathCopy
         msg = "No such path from S to G exists."
         print(response)
-        color_maze = colorPath(response, spread_maze, 0, 0)
-        plt.imshow(color_maze)
-        plt.show()
         return response, msg, spread_maze
-        return ogPath+pathCopy, response, spread_maze
 
     # If the current position tuple is the goal tuple it means the agent made it from S to G!
     if (currentPos == goal):
         response = ogPath + pathCopy
         msg = "Agent survived!"
         print(response)
-        color_maze = colorPath(response, spread_maze, 0, 0)
-        plt.imshow(color_maze)
-        plt.show()
         return response, msg, spread_maze
 
 

@@ -48,7 +48,6 @@ def path():
     answer2, msg, fire_maze = stratTwoAStar(main_maze, aStarPath, goal, q, '')
     print('answer2: ' + msg)
     colormap = colorPath(answer2, fire_maze, 0, 0)
-    print('outoffuncmap:')
     plt.imshow(colormap)
     plt.show()
     
@@ -57,7 +56,6 @@ def path():
     answer3, msg, fire_maze = stratThreeAStar(main_maze, aStarPath, goal, q, '')
     print('answer3: ' + msg)
     colormap = colorPath(answer3, fire_maze, 0, 0)
-    print('outoffuncmap:')
     plt.imshow(colormap)
     plt.show()
 
