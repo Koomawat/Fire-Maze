@@ -48,10 +48,10 @@ def main():
     plt.imshow(fired)
     plt.show()
 
-    answer2 = stratTwoAStar(main_maze, aStarPath, goal)
+    answer2 = stratTwoAStar(main_maze, aStarPath, goal, q)
     print (answer2)
 
-    answer3 = stratThreeAStar(main_maze, aStarPath, goal)
+    answer3 = stratThreeAStar(main_maze, aStarPath, goal, q)
     print (answer3)
 
 
