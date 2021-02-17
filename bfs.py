@@ -208,7 +208,7 @@ def bfs(main_maze, start, goal, mlen):
         #print(path) # doesn't print cuz empty
 
         (x, y) = node
-        # if the goal is found, return true for now -> need to figure out what to do with display
+        # if the goal is found, return the path
         if node == goal:
             return path
 
@@ -222,7 +222,7 @@ def bfs(main_maze, start, goal, mlen):
 
          # if the node is empty and hasnt been visited yet, add its neighbours to the queue
         elif maze[x, y] == 0 and node not in visited:
-            visited.add(node) # mark it as visited by adding to the set
+            visited.add(node)
             for movement, neighborElements in tree[node]:
                 # path = path + movement
                 queue.append((neighborElements, path + movement))
