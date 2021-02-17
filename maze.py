@@ -25,24 +25,29 @@ def main():
     print(f'Is there a path from {start} to {goal} using DFS?: {reachable}')
 
     #bfs returns the optimal path from the start to the goal
-    # optimalpath = bfs(main_maze, start, goal, mlen)
-    # print(f'Was a shortest path found from {start} to {goal}?: {optimalpath}')
+    #optimalpath = bfs(main_maze, start, goal, mlen)
+    #print(f'Was a shortest path found from {start} to {goal}?: {optimalpath}')
 
     #colored_maze = colorPath(optimalpath, main_maze)
     #plt.imshow(colored_maze)
     #plt.show()
 
     # A* returning the optimal path from S to G
-   # aStarPath = aStar(main_maze, start, goal)
-   # print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
-    # color_maze = colorPath(optimalpath, main_maze, 0, 0)
-    # plt.imshow(color_maze)
-    # plt.show()
+    aStarPath = aStar(main_maze, start, goal)
+    print(f'Is there a path from {start} to {goal} using A*?: {aStarPath}')
+    color_maze = colorPath(aStarPath, main_maze, 0, 0)
+    plt.imshow(color_maze)
+    plt.show()
 
+    #fired = future_fire(color_maze)
+    #plt.imshow(fired)
+    #plt.show()
 
-    # answer = stratTwoBfs(main_maze, optimalpath, goal, mlen)
+    #answer2 = stratTwoAStar(main_maze, aStarPath, goal)
+    #print (answer2)
 
-    # print (answer)
+    answer3 = stratThreeAStar(main_maze, aStarPath, goal)
+    print (answer3)
 
 
 if __name__ == "__main__":
