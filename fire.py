@@ -2,9 +2,10 @@ import copy
 import random
 import math
 
+
 # q value for flammability rate
-def getQ():
-    q = 0.1
+def getQ(value=0.1):
+    q = value
     return q
 
 def future_fire(maze):

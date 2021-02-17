@@ -4,10 +4,10 @@ import copy
 from matplotlib import pyplot as plt
 from matplotlib import colors
 
-def mazeGen():
+def mazeGen(maze_length):
 
     # Taking size of the maze from the user
-    maze_length = int(input("Enter the length of a square maze: "))
+    # maze_length = int(input("Enter the length of a square maze: "))
     maze = np.zeros((maze_length, maze_length))
 
     # Variable p represents the probability of a cell in the Maze being occupied
@@ -32,8 +32,6 @@ def mazeGen():
     # A fire cell is represented as a 2
     maze[0,0] = 0
     maze[maze_length-1,maze_length-1] = 0
-
-    
 
     return maze, maze_length
 
