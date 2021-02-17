@@ -63,7 +63,6 @@ def plotting():
     for x in range(1, 10):
         q = x * 0.1
         getQ(q)
-        print(q)
 
         mazes = []
 
@@ -80,13 +79,16 @@ def plotting():
             reachable = dfs(maze, (0,0), (mlen-1, mlen-1), mlen)
 
             # regenerate the maze until they are reachable from one another
-            while not fire_reachable and not reachable:
+            while (not fire_reachable) or (not reachable):
                 main_maze, mlen = mazeGen.mazeGen(mazelength)
                 maze, fire_initial = mazeGen.initialFire(main_maze, mlen)
                 fire_reachable = dfs(maze, (0,0), fire_initial, mlen)
                 reachable = dfs(maze, (0,0), (mlen-1, mlen-1), mlen)
+
             # if reachable, append mazes list
             mazes.append(maze)
+            # plt.imshow(maze)
+            # plt.show()
 
         success_count = 0
         # for each valid maze 
