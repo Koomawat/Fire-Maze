@@ -198,7 +198,7 @@ def stratTwoAStar(maze, aStarPath, goal, q, ogPath):
                 return response, msg, spread_maze
 
             # Finding the new path after every time step
-            newAStarPath = aStar(spread_maze, currentPos, goal, q)
+            newAStarPath = aStar(spread_maze, currentPos, goal)
 
             # If the newly returned path tells us not path exists then the Agent is trapped and can no longer reach the goal
             if(newAStarPath == "No such path from S to G exists."):

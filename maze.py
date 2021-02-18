@@ -7,7 +7,7 @@ from bfs import *
 from fire import *
 from matplotlib import pyplot as plt
 from matplotlib import colors
-
+import time
 
 def path():
     maze_length = int(input("Enter the length of a square maze: "))
@@ -50,13 +50,20 @@ def main():
     
 
 def plotting():
+
     flammability = [x * 0.1 for x in range(1, 10)]
     average = []
 
     mazelength = int(input("Enter the length of a square maze: "))
 
+    start_original = time.time()
+    start_time = 0
+    total_time = 0
+
     # for each flammability 
     for x in range(1, 10):
+        start_time = time.time()
+
         q = x * 0.1
 
         mazes = []
@@ -110,9 +117,9 @@ def plotting():
             ##################### Strategy 2 #####################
             
             # strat 2
-            # aStarPath = aStar(currMaze, (0,0), (mlen-1, mlen-1), q)
+            # aStarPath = aStar(currMaze, (0,0), (mlen-1, mlen-1))
             # _, msg, _ = stratTwoAStar(currMaze, aStarPath, (mlen-1, mlen-1), q, '')
-            # print(msg)
+            # # print(msg)
             # if "survived" in msg:
             #     success_count += 1
             # plt.title('Strategy 2, A* Algorithm')
@@ -127,9 +134,16 @@ def plotting():
             #     success_count += 1
             # plt.title('Strategy 3, A* Algorithm')
 
+            
+        total_time += (time.time() - start_time)
+
         avg = success_count/10
         average.append(avg)
-    
+
+    # 9 q's, 10 maps, 10 repeat
+    print("--- total %s seconds ---" % (time.time() - start_original))
+    print("--- average %s seconds ---" % ((time.time() - start_original) / 10))
+
     plt.scatter(flammability, average, marker='o')
     plt.xlabel('Flammability q')
     plt.ylabel('Average success')
