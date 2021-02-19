@@ -20,7 +20,7 @@ def dfs(maze, start, goal, mlen):
         
         # out of boundary, explore another position in stack
         if x >= mlen or y >= mlen or x < 0 or y < 0 or visited[x, y] == 1:
-            continue;
+            continue
 
         # if it reached the goal, there is a path
         if (x, y) == goal:
@@ -28,7 +28,7 @@ def dfs(maze, start, goal, mlen):
 
         # skip if the cell is visited or blocked/fired
         if visited[x, y] == 1 or maze[x, y] >= 1:
-            continue;
+            continue
         # if the cell is not visited and is empty
         elif visited[x, y] == 0 and maze[x, y] == 0:
             visited[x, y] = 1
@@ -78,7 +78,7 @@ def dfs_graph(main_maze, start, goal, mlen):
         elif maze[x, y] == 0 and node not in visited:
             visited.add(node)
             for movement, neighborElements in tree[node]:
-                # path = path + movement
+                # path = current path + new movement, doing it outside the append broke it randomly
                 stack.append((neighborElements, path + movement))
     
     return "No such path from S to G exists"

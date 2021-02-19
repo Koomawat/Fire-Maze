@@ -218,7 +218,7 @@ def bfs(main_maze, start, goal, mlen):
         elif maze[x, y] == 0 and node not in visited:
             visited.add(node)
             for movement, neighborElements in tree[node]:
-                # path = path + movement
+                # path = current path + new movement, doing it outside the append broke it randomly
                 queue.append((neighborElements, path + movement))
             #node = (x+1, y)
             #path = newPath
@@ -234,4 +234,4 @@ def bfs(main_maze, start, goal, mlen):
             #tuples = node, path
             #queue.append(tuples) # add left
 
-    return "No such path from S to G exists" # filler for now
+    return "No such path from S to G exists" # if no path is found
