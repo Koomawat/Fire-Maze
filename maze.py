@@ -52,7 +52,8 @@ def main():
 def plotting():
 
     flammability = [x * 0.1 for x in range(1, 10)]
-    average = []
+    # average = []
+    s1_average, s2_average, s3_average = [], [], []
 
     mazelength = int(input("Enter the length of a square maze: "))
 
@@ -92,7 +93,9 @@ def plotting():
             # plt.imshow(maze)
             # plt.show()
 
-        success_count = 0
+        # success_count = 0
+        s1_success_count, s2_success_count, s3_success_count = 0, 0, 0
+        
         # for each valid maze 
         for currMaze in mazes:
             # run algo 
@@ -103,8 +106,8 @@ def plotting():
             aStarPath = aStar(currMaze, (0,0), (mlen-1, mlen-1))
             msg = traversePath(aStarPath, currMaze, 0, 0, q)
             if "No" not in msg:
-                success_count += 1
-            plt.title('Strategy 1, A* Algorithm')
+                s1_success_count += 1
+            # plt.title('Strategy 1, A* Algorithm')
             # plt.imshow(maze)
             # plt.show()
 
@@ -117,37 +120,52 @@ def plotting():
             ##################### Strategy 2 #####################
             
             # strat 2
-            # aStarPath = aStar(currMaze, (0,0), (mlen-1, mlen-1))
-            # _, msg, _ = stratTwoAStar(currMaze, aStarPath, (mlen-1, mlen-1), q, '')
-            # # print(msg)
-            # if "survived" in msg:
-            #     success_count += 1
+            # aStarPath2 = aStar(currMaze, (0,0), (mlen-1, mlen-1))
+            _, msg, _ = stratTwoAStar(currMaze, aStarPath, (mlen-1, mlen-1), q, '')
+            # print(msg)
+            if "survived" in msg:
+                s2_success_count += 1
             # plt.title('Strategy 2, A* Algorithm')
 
             ##################### Strategy 3 #####################
 
             # strat 3
-            # aStarPath = aStar(currMaze, (0,0), (mlen-1, mlen-1))
-            # _, msg, _ = stratThreeAStar(currMaze, aStarPath, (mlen-1, mlen-1), q, '')
+            # aStarPath3 = aStar(currMaze, (0,0), (mlen-1, mlen-1))
+            _, msg, _ = stratThreeAStar(currMaze, aStarPath, (mlen-1, mlen-1), q, '')
             # print (aStarPath3)
-            # if "survived" in aStarPath3:
-            #     success_count += 1
+            if "survived" in msg:
+                s3_success_count += 1
             # plt.title('Strategy 3, A* Algorithm')
 
             
         total_time += (time.time() - start_time)
+        
+        # avg = success_count/10
+        # average.append(avg)
 
-        avg = success_count/10
-        average.append(avg)
+        avg1 = s1_success_count/10
+        s1_average.append(avg1)
+        avg2 = s2_success_count/10
+        s2_average.append(avg2)
+        avg3 = s3_success_count/10
+        s3_average.append(avg3)
+        
 
     # 9 q's, 10 maps, 10 repeat
     print("--- total %s seconds ---" % (time.time() - start_original))
     print("--- average %s seconds ---" % ((time.time() - start_original) / 10))
 
-    plt.scatter(flammability, average, marker='o')
+    #plt.scatter(flammability, s1_average, marker='o')
+    plt.plot(flammability, s1_average, label="Strategy 1")
+    # plt.scatter(flammability, s2_average, mark='v')
+    plt.plot(flammability, s2_average, label="Strategy 2")
+    #plt.scatter(flammability, s3_average, mark='s')
+    plt.plot(flammability,s3_average, label="Strategy 3")
+
     plt.xlabel('Flammability q')
     plt.ylabel('Average success')
-    # plt.title('Strategy 2, A* Algorithm')
+    plt.title(f'Strategies 1-3 Comparisons\nDimension: {mazelength}x{mazelength}; p=0.3')
+    plt.legend(loc="upper right")
     plt.show()
 
 def dfsCheck(main_maze, start, goal, fire_initial, mlen):
