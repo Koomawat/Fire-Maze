@@ -247,7 +247,7 @@ def bfs_original(maze, start, goal, mlen):
 
         x, y = queue.popleft()
 
-        # if the goal is found, return true for now -> need to figure out what to do with display
+        # if the goal is found, return true
         if (x, y) == goal:
             return True
 
@@ -261,7 +261,7 @@ def bfs_original(maze, start, goal, mlen):
 
         # if the node is empty and hasnt been visited yet, add its neighbours to the queue with right/down prio
         elif maze[x,y] == 0 and visited[x, y] == 0:
-            visited[x,y] = 1 # not fully sure on if this is the right thing to do
+            visited[x,y] = 1
             queue.append((x+1, y)) # add right
             queue.append((x, y+1)) # add down
             queue.append((x, y-1)) # add up
@@ -269,4 +269,4 @@ def bfs_original(maze, start, goal, mlen):
 
    # plt.imshow(visited)
    # plt.show()
-    return False # filler for now
+    return False
