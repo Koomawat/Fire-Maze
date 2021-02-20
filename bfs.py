@@ -5,6 +5,7 @@ import mazeGen
 import copy
 from fire import *
 
+
 def stratThreeBfs(maze, optimalPath, goal, mlen, q):
 
     # Copy of maze to call spread fire on
