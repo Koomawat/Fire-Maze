@@ -13,6 +13,7 @@ def dfs(maze, start, goal, mlen):
     # starts at (0,0)
     stack.append(start)
 
+    # while stack is not empty
     while stack:
 
         # current position
@@ -38,6 +39,7 @@ def dfs(maze, start, goal, mlen):
             stack.append((x, y+1))  # down
             stack.append((x+1, y))  # right
     
+    # if no existing path is found
     return False
 
 # for path marking
@@ -54,6 +56,7 @@ def dfs_graph(main_maze, start, goal, mlen):
     # makes 2D array into graph
     tree = arrayToTree(maze)
 
+    # while stack is not empty
     while stack:
 
         # current position traversing
@@ -81,6 +84,7 @@ def dfs_graph(main_maze, start, goal, mlen):
                 # path = current path + new movement, doing it outside the append broke it randomly
                 stack.append((neighborElements, path + movement))
     
+    # if no path is found
     return "No such path from S to G exists"
     
 

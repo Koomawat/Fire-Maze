@@ -5,13 +5,15 @@ import copy
 from matplotlib import pyplot as plt
 from matplotlib import colors
 
-def mazeGen(maze_length):
+# defaults p value to 0.3
+def mazeGen(maze_length, p=0.3):
 
     # Taking size of the maze from the user
     maze = np.zeros((maze_length, maze_length))
 
     # Variable p represents the probability of a cell in the Maze being occupied
-    p = 0.3
+    # p = 0.3
+    # print(p)
 
     # Here we use numpy to traverse the Maze we created
     # For each cell we do a random from 0 to 1 and if the value is p or less the cell will have an occupied state
@@ -33,6 +35,7 @@ def mazeGen(maze_length):
     maze[0,0] = 0
     maze[maze_length-1,maze_length-1] = 0
 
+    # return the generated maze and its length
     return maze, maze_length
 
 def initialFire(main_maze, maze_length):
@@ -203,7 +206,8 @@ def singleColorPath(main_maze, y, x, colorCode=3):
     maze[y, x] = colorCode
 
     return maze
-    
+
+# leads from one cell to another
 def pathToPosition(position, x, y):
     
     posCopy = position
@@ -220,6 +224,7 @@ def pathToPosition(position, x, y):
 
     return (x,y)
 
+# traverse the path based on the given string consisting of directions
 def traversePath(path, main_maze, y, x, q): 
     
     maze = copy.deepcopy(main_maze)
@@ -230,11 +235,16 @@ def traversePath(path, main_maze, y, x, q):
 
     mlen = len(spread_maze)
     
+    # check bounds
     if x >= mlen or y >= mlen or x < 0 or y < 0:
         return "outie"
     
+    # for each direction in the path
     for letter in path:
+        # spread the fire for each movement
         spread_maze = spread_fire(spread_maze, q)
+
+    
         if spread_maze[y, x] == 2:
             return "No"
 
@@ -246,11 +256,12 @@ def traversePath(path, main_maze, y, x, q):
             y -= 1
         elif letter == "D":
             y += 1
-        # [row, col]
+        # [row, col] since parameters are in y, x
 
         if x >= mlen or y >= mlen or x < 0 or y < 0:
             return "outie"
         else:
+            # if not out of bounds, color the path
             spread_maze[y, x] = 3
 
     return "Yes"
