@@ -5,7 +5,7 @@ import copy
 from matplotlib import pyplot as plt
 from matplotlib import colors
 
-# defaults p value to 0.3
+# defaults p value to 0.3 if no input
 def mazeGen(maze_length, p=0.3):
 
     # Taking size of the maze from the user
